@@ -190,7 +190,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:ef74914912f99c79434d9c09658274678bc85080ebe3ab32bec3940ebce5e1fc"
+  digest = "1:9ea97158ea06d60b1f324aa384f6a4cbd596a81b3cae994e17108b195f398d01"
   name = "github.com/prometheus/procfs"
   packages = [
     ".",
@@ -199,7 +199,7 @@
     "xfs",
   ]
   pruneopts = "UT"
-  revision = "619930b0b4713cc1280189bf0a4c54b3fb506f60"
+  revision = "aa55a523dc0a8297edf51bb75e8eec13eb3be45d"
 
 [[projects]]
   digest = "1:69b1cc331fca23d702bd72f860c6a647afd0aa9fcbc1d0659b1365e26546dd70"
@@ -227,11 +227,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:054ed48720b4f53f283662c0b369936c1ee63cc822a4e6b18b7dd2dd9846dd3f"
+  digest = "1:757587e651a7083f709a91c09cf5796d5da69d01174df5b8c36d710cea8da822"
   name = "github.com/videocoin/common"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "d7d9fa9dc9de547c19c27eefff4063a40e0148e3"
+  revision = "62424568b2f2f644758e55fee826bcc40ee2915c"
 
 [[projects]]
   branch = "master"
@@ -259,7 +259,7 @@
     "trace",
   ]
   pruneopts = "UT"
-  revision = "adae6a3d119ae4890b46832a2e88a95adc62b8e7"
+  revision = "fae4c4e3ad76c295c3d6d259f898136b4bf833a8"
 
 [[projects]]
   branch = "master"
