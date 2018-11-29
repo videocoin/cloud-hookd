@@ -7,7 +7,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
-	pb "gitlab.videocoin.io/videocoin/common/proto"
+	pb "github.com/videocoin/common/proto"
 )
 
 // Common hook errors

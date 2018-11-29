@@ -7,8 +7,8 @@ import (
 	"github.com/labstack/echo"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/sirupsen/logrus"
-	pb "gitlab.videocoin.io/videocoin/common/proto"
-	"gitlab.videocoin.io/videocoin/hookd/pkg/grpcclient"
+	pb "github.com/videocoin/common/proto"
+	"github.com/videocoin/hookd/pkg/grpcclient"
 	"google.golang.org/grpc"
 )
 

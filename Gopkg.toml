@@ -59,7 +59,7 @@
 
 [[constraint]]
   branch = "master"
-  name = "gitlab.videocoin.io/videocoin/common"
+  name = "github.com/videocoin/common"
 
 [[constraint]]
   name = "google.golang.org/grpc"
