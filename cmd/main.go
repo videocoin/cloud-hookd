@@ -1,6 +1,6 @@
 package main
 
-import "gitlab.videocoin.io/videocoin/ingester/hookd"
+import "gitlab.videocoin.io/videocoin/hookd"
 
 func main() {
 	hookd.Start()
