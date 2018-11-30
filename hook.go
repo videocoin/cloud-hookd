@@ -101,7 +101,7 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	managerResp, err := h.manager.CreateStream(ctx, &pb.StreamRequest{
 		ApplicationId: streamInfo.CameraID,
 		UserId:        int32(streamInfo.UserID),
-		StreamId:      "cameracamera",
+		StreamId:      streamInfo.CameraID,
 	})
 
 	logger.Debugf("manager response: %+v", managerResp)
@@ -157,6 +157,39 @@ func (h *Hook) handleUpdatePublish(r *http.Request) error {
 }
 
 func (h *Hook) handlePublishDone(r *http.Request) error {
+	logger := h.logger.WithField("hook", "publish_done")
+	logger.Info("handling publish done hook")
+
+	streamInfo, err := ParseStreamName(r.FormValue("name"))
+	if err != nil {
+		logger.Warningf("failed to parse stream name: %s", err)
+		return ErrBadRequest
+	}
+
+	logger = logger.WithFields(logrus.Fields{
+		"uid": streamInfo.UserID,
+		"cid": streamInfo.CameraID,
+	})
+
+	// logger.Info("getting user profile")
+
+	ctx := context.Background()
+
+	logger.Info("marking stream as offline")
+
+	// cameraReq := &pb.InternalCameraRequest{
+	// 	ID: streamInfo.CameraID,
+	// }
+
+	managerResp, err := h.manager.StopStream(ctx, &pb.StreamRequest{
+		ApplicationId: streamInfo.CameraID,
+		UserId:        int32(streamInfo.UserID),
+		StreamId:      streamInfo.CameraID,
+	})
+
+	logger.Debugf("manager response: %+v", managerResp)
+
+	return nil
 	// logger := h.logger.WithField("hook", "publish_done")
 	// logger.Info("handling hook")
 
