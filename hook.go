@@ -86,7 +86,7 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	logger = logger.WithFields(logrus.Fields{
 		"uid": streamInfo.UserID,
 		"cid": streamInfo.CameraID,
-		"aid": streamInfo.ApplicationId
+		"aid": streamInfo.CameraID,
 	})
 
 	logger.Info("getting user profile")
