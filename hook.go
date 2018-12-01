@@ -86,6 +86,7 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	logger = logger.WithFields(logrus.Fields{
 		"uid": streamInfo.UserID,
 		"cid": streamInfo.CameraID,
+		"aid": streamInfo.CameraID,
 	})
 
 	logger.Info("getting user profile")
@@ -101,7 +102,7 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	managerResp, err := h.manager.CreateStream(ctx, &pb.StreamRequest{
 		ApplicationId: streamInfo.CameraID,
 		UserId:        int32(streamInfo.UserID),
-		StreamId:      "cameracamera",
+		StreamId:      streamInfo.CameraID,
 	})
 
 	logger.Debugf("manager response: %+v", managerResp)
@@ -157,50 +158,40 @@ func (h *Hook) handleUpdatePublish(r *http.Request) error {
 }
 
 func (h *Hook) handlePublishDone(r *http.Request) error {
-	// logger := h.logger.WithField("hook", "publish_done")
-	// logger.Info("handling hook")
+	logger := h.logger.WithField("hook", "publish_done")
+	logger.Info("handling publish done hook")
 
-	// streamInfo, err := ParseStreamName(r.FormValue("name"))
-	// if err != nil {
-	// 	logger.Warningf("failed to parse stream name: %s", err)
-	// 	return ErrBadRequest
-	// }
+	streamInfo, err := ParseStreamName(r.FormValue("name"))
+	if err != nil {
+		logger.Warningf("failed to parse stream name: %s", err)
+		return ErrBadRequest
+	}
 
-	// logger = logger.WithFields(logrus.Fields{
-	// 	"uid": streamInfo.UserID,
-	// 	"cid": streamInfo.CameraID,
-	// })
+	logger = logger.WithFields(logrus.Fields{
+		"uid": streamInfo.UserID,
+		"cid": streamInfo.CameraID,
+	})
 
 	// logger.Info("getting user profile")
 
-	// ctx := context.Background()
-	// tokenReq := &pb.OAuth2TokenRequest{
-	// 	UserId: streamInfo.UserID,
-	// 	AppId:  "web",
-	// }
-	// tokenResp, err := h.profile.GetOAuth2Token(ctx, tokenReq)
-	// if err != nil {
-	// 	logger.Errorf("failed to get oath2 token: %s", err)
-	// 	return ErrBadRequest
-	// }
+	ctx := context.Background()
 
-	// logger.Debugf("token response: %+v", tokenResp)
-
-	// logger.Info("marking camera as off air")
+	logger.Info("marking stream as offline")
 
 	// cameraReq := &pb.InternalCameraRequest{
-	// 	ID:      streamInfo.CameraID,
-	// 	OwnerID: tokenResp.UserId,
-	// }
-	// cameraResp, err := h.cameras.MarkCameraAsOffAir(ctx, cameraReq)
-	// if err != nil {
-	// 	logger.Errorf("failed to mark camera as off air: %s", err)
-	// 	return ErrBadRequest
+	// 	ID: streamInfo.CameraID,
 	// }
 
-	// logger.Debugf("camera response: %+v", cameraResp)
+	managerResp, err := h.manager.StopStream(ctx, &pb.StreamRequest{
+		ApplicationId: streamInfo.CameraID,
+		UserId:        int32(streamInfo.UserID),
+		StreamId:      streamInfo.CameraID,
+	})
+
+	logger.Debugf("manager response: %+v", managerResp)
 
 	return nil
+
 }
 
 func (h *Hook) handleRecord(r *http.Request) error {
