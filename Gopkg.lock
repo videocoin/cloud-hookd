@@ -227,11 +227,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:99263d980318499bd990db54d5c3e41dbe5846fa4227588f0cb4e77206823e7c"
+  digest = "1:28f1c7f5c310c144a07f360d49620cc326b26736c59fd83ddf203ac6cd6d3a2d"
   name = "github.com/videocoin/common"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "ea6b0b7bec0987bbc0c844c5d210c45275eb7a5d"
+  revision = "e1a6b778059d8bf20f5ef11632c2ae36d6f5a9ce"
 
 [[projects]]
   branch = "master"
