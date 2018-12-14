@@ -2,7 +2,6 @@ package hookd
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
 
@@ -16,7 +15,7 @@ var (
 
 // StreamInfo used to parsing incoming rtmp stream
 type StreamInfo struct {
-	UserID   uint32
+	UserID   string
 	CameraID string
 }
 
@@ -32,21 +31,17 @@ func ParseStreamName(name string) (*StreamInfo, error) {
 	}
 
 	streamInfo := new(StreamInfo)
-	userID, err := strconv.ParseUint(parts[0], 10, 32)
-	if err != nil {
-		return nil, ErrInvalidUserID
-	}
 
-	streamInfo.UserID = uint32(userID)
+	streamInfo.UserID = parts[0]
 	streamInfo.CameraID = parts[1]
 
 	fmt.Printf("%+v", parts)
 
-	if streamInfo.UserID == 0 {
+	if len(streamInfo.UserID) == 0 {
 		return nil, ErrInvalidUserID
 	}
 
-	if len(streamInfo.CameraID) != 12 {
+	if len(streamInfo.CameraID) == 0 {
 		return nil, ErrInvalidCameraID
 	}
 

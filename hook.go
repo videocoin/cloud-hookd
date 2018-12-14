@@ -101,7 +101,7 @@ func (h *Hook) handlePublish(r *http.Request) error {
 
 	managerResp, err := h.manager.CreateStream(ctx, &pb.StreamRequest{
 		ApplicationId: streamInfo.CameraID,
-		UserId:        int32(streamInfo.UserID),
+		UserId:        streamInfo.UserID,
 		StreamId:      streamInfo.CameraID,
 	})
 
@@ -184,7 +184,7 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 
 	managerResp, err := h.manager.StopStream(ctx, &pb.StreamRequest{
 		ApplicationId: streamInfo.CameraID,
-		UserId:        int32(streamInfo.UserID),
+		UserId:        streamInfo.UserID,
 		StreamId:      streamInfo.CameraID,
 	})
 

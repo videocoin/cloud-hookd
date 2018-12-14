@@ -10,7 +10,7 @@
   revision = "3a771d992973f24aa725d07868b467d1ddfceafb"
 
 [[projects]]
-  digest = "1:3f7c586d2fd571c4f2e3d313c0638b33b999055de507d5f11fafe27e5adc30db"
+  digest = "1:452644cddfec8736ad410d9a5a4eacce21810873ceaa938ae373edf2f2c0fe84"
   name = "github.com/gogo/protobuf"
   packages = [
     "gogoproto",
@@ -20,8 +20,8 @@
     "types",
   ]
   pruneopts = "UT"
-  revision = "636bf0302bc95575d69441b25a2603156ffdddf1"
-  version = "v1.1.1"
+  revision = "4cbf7e384e768b4e01799441fdf2a706a5635ae7"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
@@ -227,11 +227,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:9b2520c9e040583dba3699319baf188bfb19bc577a002e07e27ffade27fda31d"
+  digest = "1:3532a95111bff298ee640349269794d00d9edc2af7fa951fef383d3761a5695f"
   name = "github.com/videocoin/common"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "806fc54dc486b40341471e6218e9ca256a773747"
+  revision = "007cf5774ab8814797ca1c185560a1f4f04d38ce"
 
 [[projects]]
   branch = "master"
@@ -247,7 +247,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:7a2e3d6819e7a97a877f8604e737901c6941e76d56ae98a51a1ca2f13de351fb"
+  digest = "1:89a0cb976397aa9157a45bb2b896d0bcd07ee095ac975e0f03c53250c402265e"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -259,18 +259,18 @@
     "trace",
   ]
   pruneopts = "UT"
-  revision = "610586996380ceef02dd726cc09df7e00a3f8e56"
+  revision = "891ebc4b82d6e74f468c533b06f983c7be918a96"
 
 [[projects]]
   branch = "master"
-  digest = "1:268575c4d9e27391ede5e3559c7f41a15dbf108678672afade864e08d6c34574"
+  digest = "1:ba8cbf57cfd92d5f8592b4aca1a35d92c162363d32aeabd5b12555f8896635e7"
   name = "golang.org/x/sys"
   packages = [
     "unix",
     "windows",
   ]
   pruneopts = "UT"
-  revision = "2a47403f2ae58167c4d75973960ccc62b28cb0d8"
+  revision = "4d1cda033e0619309c606fc686de3adcf599539e"
 
 [[projects]]
   digest = "1:a2ab62866c75542dd18d2b069fec854577a20211d7c0ea6ae746072a1dccdd18"
