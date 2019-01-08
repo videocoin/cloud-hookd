@@ -32,6 +32,7 @@ enum TranscodeStatus {
     canceld = 3 [ (gogoproto.enumvalue_customname) = "TranscodeStatusCanceled" ];
     failed = 4 [ (gogoproto.enumvalue_customname) = "TranscodeStatusFailed" ];
     completed = 5 [ (gogoproto.enumvalue_customname) = "TranscodeStatusCompleted" ];
+    ready = 6 [ (gogoproto.enumvalue_customname) = "TranscodeStatusReady" ];
   }
 
 
@@ -44,7 +45,9 @@ message SimpleTranscodeTask {
     string status = 4;
     string user_id = 5;
     string application_id = 6;
-    string created_at = 7 [ (gogoproto.moretags) = "gorm:\"created_at;type:DATETIME;DEFAULT:current_timestamp\" sql:\"type:DATETIME;DEFAULT:current_timestamp\"" ];
-    string updated_at = 8 [ (gogoproto.moretags) = "gorm:\"updated_at;type:DATETIME;DEFAULT:current_timestamp\" sql:\"type:DATETIME;DEFAULT:current_timestamp\"" ];
+    bytes chunks = 7 [ (gogoproto.moretags) = "gorm:\"chunks;type:json;DEFAULT:NULL\" sql:\"type:json;DEFAULT:null\"" ];
+    string created_at = 8 [ (gogoproto.moretags) = "gorm:\"created_at;type:DATETIME;DEFAULT:current_timestamp\" sql:\"type:DATETIME;DEFAULT:current_timestamp\"" ];
+    string updated_at = 9 [ (gogoproto.moretags) = "gorm:\"updated_at;type:DATETIME;DEFAULT:current_timestamp\" sql:\"type:DATETIME;DEFAULT:current_timestamp\"" ];
+    
 }
 

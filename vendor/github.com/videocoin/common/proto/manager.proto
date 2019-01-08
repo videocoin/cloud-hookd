@@ -60,8 +60,23 @@ service ManagerService {
     };
   };
 
+  rpc SetChunkVerificationStatus(SetChunkVerificationRequest) returns (SetChunkVerificationResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/verify/{id}/{chunk_id}/{hash_distance}"
+    };
+  };
+
 }
 
+message SetChunkVerificationRequest {
+  string id = 1;
+  string chunk_id = 2;
+  int32 hash_distance = 3;
+}
+
+message SetChunkVerificationResponse {
+  bool success = 1;
+}
 
 message StreamRequest {
     string application_id  = 1;
