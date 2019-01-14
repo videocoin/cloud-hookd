@@ -21,6 +21,12 @@ var _ = fmt.Errorf
 var _ = math.Inf
 var _ = time.Kitchen
 
+func (this *SetChunkVerificationRequest) Validate() error {
+	return nil
+}
+func (this *SetChunkVerificationResponse) Validate() error {
+	return nil
+}
 func (this *StreamRequest) Validate() error {
 	return nil
 }
@@ -30,7 +36,7 @@ func (this *UpdateStreamStatusRequest) Validate() error {
 func (this *StreamResponse) Validate() error {
 	return nil
 }
-func (this *GetTaskRequest) Validate() error {
+func (this *GetJobRequest) Validate() error {
 	return nil
 }
 func (this *GetStreamRequest) Validate() error {

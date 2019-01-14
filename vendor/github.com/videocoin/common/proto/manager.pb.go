@@ -29,6 +29,116 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+type SetChunkVerificationRequest struct {
+	JobId                string   `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	ChunkId              string   `protobuf:"bytes,2,opt,name=chunk_id,json=chunkId,proto3" json:"chunk_id,omitempty"`
+	HashDistance         int32    `protobuf:"varint,3,opt,name=hash_distance,json=hashDistance,proto3" json:"hash_distance,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetChunkVerificationRequest) Reset()         { *m = SetChunkVerificationRequest{} }
+func (m *SetChunkVerificationRequest) String() string { return proto.CompactTextString(m) }
+func (*SetChunkVerificationRequest) ProtoMessage()    {}
+func (*SetChunkVerificationRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_manager_638b39aa5e94bc6b, []int{0}
+}
+func (m *SetChunkVerificationRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SetChunkVerificationRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SetChunkVerificationRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *SetChunkVerificationRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetChunkVerificationRequest.Merge(dst, src)
+}
+func (m *SetChunkVerificationRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SetChunkVerificationRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetChunkVerificationRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetChunkVerificationRequest proto.InternalMessageInfo
+
+func (m *SetChunkVerificationRequest) GetJobId() string {
+	if m != nil {
+		return m.JobId
+	}
+	return ""
+}
+
+func (m *SetChunkVerificationRequest) GetChunkId() string {
+	if m != nil {
+		return m.ChunkId
+	}
+	return ""
+}
+
+func (m *SetChunkVerificationRequest) GetHashDistance() int32 {
+	if m != nil {
+		return m.HashDistance
+	}
+	return 0
+}
+
+type SetChunkVerificationResponse struct {
+	Success              bool     `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetChunkVerificationResponse) Reset()         { *m = SetChunkVerificationResponse{} }
+func (m *SetChunkVerificationResponse) String() string { return proto.CompactTextString(m) }
+func (*SetChunkVerificationResponse) ProtoMessage()    {}
+func (*SetChunkVerificationResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_manager_638b39aa5e94bc6b, []int{1}
+}
+func (m *SetChunkVerificationResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SetChunkVerificationResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SetChunkVerificationResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *SetChunkVerificationResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetChunkVerificationResponse.Merge(dst, src)
+}
+func (m *SetChunkVerificationResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *SetChunkVerificationResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetChunkVerificationResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetChunkVerificationResponse proto.InternalMessageInfo
+
+func (m *SetChunkVerificationResponse) GetSuccess() bool {
+	if m != nil {
+		return m.Success
+	}
+	return false
+}
+
 type StreamRequest struct {
 	ApplicationId        string   `protobuf:"bytes,1,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
 	StreamId             string   `protobuf:"bytes,2,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
@@ -42,7 +152,7 @@ func (m *StreamRequest) Reset()         { *m = StreamRequest{} }
 func (m *StreamRequest) String() string { return proto.CompactTextString(m) }
 func (*StreamRequest) ProtoMessage()    {}
 func (*StreamRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_manager_26dea584ca0e3de1, []int{0}
+	return fileDescriptor_manager_638b39aa5e94bc6b, []int{2}
 }
 func (m *StreamRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -105,7 +215,7 @@ func (m *UpdateStreamStatusRequest) Reset()         { *m = UpdateStreamStatusReq
 func (m *UpdateStreamStatusRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateStreamStatusRequest) ProtoMessage()    {}
 func (*UpdateStreamStatusRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_manager_26dea584ca0e3de1, []int{1}
+	return fileDescriptor_manager_638b39aa5e94bc6b, []int{3}
 }
 func (m *UpdateStreamStatusRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -167,7 +277,7 @@ func (m *StreamResponse) Reset()         { *m = StreamResponse{} }
 func (m *StreamResponse) String() string { return proto.CompactTextString(m) }
 func (*StreamResponse) ProtoMessage()    {}
 func (*StreamResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_manager_26dea584ca0e3de1, []int{2}
+	return fileDescriptor_manager_638b39aa5e94bc6b, []int{4}
 }
 func (m *StreamResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -210,25 +320,24 @@ func (m *StreamResponse) GetOutputUrl() string {
 	return ""
 }
 
-type GetTaskRequest struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+type GetJobRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetTaskRequest) Reset()         { *m = GetTaskRequest{} }
-func (m *GetTaskRequest) String() string { return proto.CompactTextString(m) }
-func (*GetTaskRequest) ProtoMessage()    {}
-func (*GetTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_manager_26dea584ca0e3de1, []int{3}
+func (m *GetJobRequest) Reset()         { *m = GetJobRequest{} }
+func (m *GetJobRequest) String() string { return proto.CompactTextString(m) }
+func (*GetJobRequest) ProtoMessage()    {}
+func (*GetJobRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_manager_638b39aa5e94bc6b, []int{5}
 }
-func (m *GetTaskRequest) XXX_Unmarshal(b []byte) error {
+func (m *GetJobRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetTaskRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetJobRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetTaskRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetJobRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -238,24 +347,17 @@ func (m *GetTaskRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-func (dst *GetTaskRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetTaskRequest.Merge(dst, src)
+func (dst *GetJobRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetJobRequest.Merge(dst, src)
 }
-func (m *GetTaskRequest) XXX_Size() int {
+func (m *GetJobRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetTaskRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetTaskRequest.DiscardUnknown(m)
+func (m *GetJobRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetJobRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetTaskRequest proto.InternalMessageInfo
-
-func (m *GetTaskRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
+var xxx_messageInfo_GetJobRequest proto.InternalMessageInfo
 
 type GetStreamRequest struct {
 	ApplicationId        string   `protobuf:"bytes,1,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
@@ -269,7 +371,7 @@ func (m *GetStreamRequest) Reset()         { *m = GetStreamRequest{} }
 func (m *GetStreamRequest) String() string { return proto.CompactTextString(m) }
 func (*GetStreamRequest) ProtoMessage()    {}
 func (*GetStreamRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_manager_26dea584ca0e3de1, []int{4}
+	return fileDescriptor_manager_638b39aa5e94bc6b, []int{6}
 }
 func (m *GetStreamRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -313,10 +415,12 @@ func (m *GetStreamRequest) GetUserId() string {
 }
 
 func init() {
+	proto.RegisterType((*SetChunkVerificationRequest)(nil), "proto.SetChunkVerificationRequest")
+	proto.RegisterType((*SetChunkVerificationResponse)(nil), "proto.SetChunkVerificationResponse")
 	proto.RegisterType((*StreamRequest)(nil), "proto.StreamRequest")
 	proto.RegisterType((*UpdateStreamStatusRequest)(nil), "proto.UpdateStreamStatusRequest")
 	proto.RegisterType((*StreamResponse)(nil), "proto.StreamResponse")
-	proto.RegisterType((*GetTaskRequest)(nil), "proto.GetTaskRequest")
+	proto.RegisterType((*GetJobRequest)(nil), "proto.GetJobRequest")
 	proto.RegisterType((*GetStreamRequest)(nil), "proto.GetStreamRequest")
 }
 
@@ -334,10 +438,11 @@ const _ = grpc.SupportPackageIsVersion4
 type ManagerServiceClient interface {
 	CreateStream(ctx context.Context, in *StreamRequest, opts ...grpc.CallOption) (*StreamResponse, error)
 	StopStream(ctx context.Context, in *StreamRequest, opts ...grpc.CallOption) (*StreamResponse, error)
-	GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*SimpleTranscodeTask, error)
+	GetJob(ctx context.Context, in *GetJobRequest, opts ...grpc.CallOption) (*WorkOrder, error)
 	Health(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*HealthStatus, error)
-	GetStream(ctx context.Context, in *GetStreamRequest, opts ...grpc.CallOption) (*SimpleTranscodeTask, error)
+	GetStream(ctx context.Context, in *GetStreamRequest, opts ...grpc.CallOption) (*WorkOrder, error)
 	UpdateStreamStatus(ctx context.Context, in *UpdateStreamStatusRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetChunkVerificationStatus(ctx context.Context, in *SetChunkVerificationRequest, opts ...grpc.CallOption) (*SetChunkVerificationResponse, error)
 }
 
 type managerServiceClient struct {
@@ -366,9 +471,9 @@ func (c *managerServiceClient) StopStream(ctx context.Context, in *StreamRequest
 	return out, nil
 }
 
-func (c *managerServiceClient) GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*SimpleTranscodeTask, error) {
-	out := new(SimpleTranscodeTask)
-	err := c.cc.Invoke(ctx, "/proto.ManagerService/GetTask", in, out, opts...)
+func (c *managerServiceClient) GetJob(ctx context.Context, in *GetJobRequest, opts ...grpc.CallOption) (*WorkOrder, error) {
+	out := new(WorkOrder)
+	err := c.cc.Invoke(ctx, "/proto.ManagerService/GetJob", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -384,8 +489,8 @@ func (c *managerServiceClient) Health(ctx context.Context, in *empty.Empty, opts
 	return out, nil
 }
 
-func (c *managerServiceClient) GetStream(ctx context.Context, in *GetStreamRequest, opts ...grpc.CallOption) (*SimpleTranscodeTask, error) {
-	out := new(SimpleTranscodeTask)
+func (c *managerServiceClient) GetStream(ctx context.Context, in *GetStreamRequest, opts ...grpc.CallOption) (*WorkOrder, error) {
+	out := new(WorkOrder)
 	err := c.cc.Invoke(ctx, "/proto.ManagerService/GetStream", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -402,14 +507,24 @@ func (c *managerServiceClient) UpdateStreamStatus(ctx context.Context, in *Updat
 	return out, nil
 }
 
+func (c *managerServiceClient) SetChunkVerificationStatus(ctx context.Context, in *SetChunkVerificationRequest, opts ...grpc.CallOption) (*SetChunkVerificationResponse, error) {
+	out := new(SetChunkVerificationResponse)
+	err := c.cc.Invoke(ctx, "/proto.ManagerService/SetChunkVerificationStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ManagerServiceServer is the server API for ManagerService service.
 type ManagerServiceServer interface {
 	CreateStream(context.Context, *StreamRequest) (*StreamResponse, error)
 	StopStream(context.Context, *StreamRequest) (*StreamResponse, error)
-	GetTask(context.Context, *GetTaskRequest) (*SimpleTranscodeTask, error)
+	GetJob(context.Context, *GetJobRequest) (*WorkOrder, error)
 	Health(context.Context, *empty.Empty) (*HealthStatus, error)
-	GetStream(context.Context, *GetStreamRequest) (*SimpleTranscodeTask, error)
+	GetStream(context.Context, *GetStreamRequest) (*WorkOrder, error)
 	UpdateStreamStatus(context.Context, *UpdateStreamStatusRequest) (*empty.Empty, error)
+	SetChunkVerificationStatus(context.Context, *SetChunkVerificationRequest) (*SetChunkVerificationResponse, error)
 }
 
 func RegisterManagerServiceServer(s *grpc.Server, srv ManagerServiceServer) {
@@ -452,20 +567,20 @@ func _ManagerService_StopStream_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ManagerService_GetTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTaskRequest)
+func _ManagerService_GetJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ManagerServiceServer).GetTask(ctx, in)
+		return srv.(ManagerServiceServer).GetJob(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.ManagerService/GetTask",
+		FullMethod: "/proto.ManagerService/GetJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerServiceServer).GetTask(ctx, req.(*GetTaskRequest))
+		return srv.(ManagerServiceServer).GetJob(ctx, req.(*GetJobRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -524,6 +639,24 @@ func _ManagerService_UpdateStreamStatus_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ManagerService_SetChunkVerificationStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetChunkVerificationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManagerServiceServer).SetChunkVerificationStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ManagerService/SetChunkVerificationStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManagerServiceServer).SetChunkVerificationStatus(ctx, req.(*SetChunkVerificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ManagerService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "proto.ManagerService",
 	HandlerType: (*ManagerServiceServer)(nil),
@@ -537,8 +670,8 @@ var _ManagerService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _ManagerService_StopStream_Handler,
 		},
 		{
-			MethodName: "GetTask",
-			Handler:    _ManagerService_GetTask_Handler,
+			MethodName: "GetJob",
+			Handler:    _ManagerService_GetJob_Handler,
 		},
 		{
 			MethodName: "Health",
@@ -552,9 +685,82 @@ var _ManagerService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "UpdateStreamStatus",
 			Handler:    _ManagerService_UpdateStreamStatus_Handler,
 		},
+		{
+			MethodName: "SetChunkVerificationStatus",
+			Handler:    _ManagerService_SetChunkVerificationStatus_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "manager.proto",
+}
+
+func (m *SetChunkVerificationRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SetChunkVerificationRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.JobId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintManager(dAtA, i, uint64(len(m.JobId)))
+		i += copy(dAtA[i:], m.JobId)
+	}
+	if len(m.ChunkId) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintManager(dAtA, i, uint64(len(m.ChunkId)))
+		i += copy(dAtA[i:], m.ChunkId)
+	}
+	if m.HashDistance != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintManager(dAtA, i, uint64(m.HashDistance))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *SetChunkVerificationResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SetChunkVerificationResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Success {
+		dAtA[i] = 0x8
+		i++
+		if m.Success {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *StreamRequest) Marshal() (dAtA []byte, err error) {
@@ -668,7 +874,7 @@ func (m *StreamResponse) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *GetTaskRequest) Marshal() (dAtA []byte, err error) {
+func (m *GetJobRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -678,17 +884,11 @@ func (m *GetTaskRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetTaskRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetJobRequest) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if len(m.Id) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintManager(dAtA, i, uint64(len(m.Id)))
-		i += copy(dAtA[i:], m.Id)
-	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
@@ -737,6 +937,44 @@ func encodeVarintManager(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
+func (m *SetChunkVerificationRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.JobId)
+	if l > 0 {
+		n += 1 + l + sovManager(uint64(l))
+	}
+	l = len(m.ChunkId)
+	if l > 0 {
+		n += 1 + l + sovManager(uint64(l))
+	}
+	if m.HashDistance != 0 {
+		n += 1 + sovManager(uint64(m.HashDistance))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SetChunkVerificationResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Success {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *StreamRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -805,16 +1043,12 @@ func (m *StreamResponse) Size() (n int) {
 	return n
 }
 
-func (m *GetTaskRequest) Size() (n int) {
+func (m *GetJobRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovManager(uint64(l))
-	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -853,6 +1087,205 @@ func sovManager(x uint64) (n int) {
 }
 func sozManager(x uint64) (n int) {
 	return sovManager(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *SetChunkVerificationRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowManager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SetChunkVerificationRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SetChunkVerificationRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field JobId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthManager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.JobId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ChunkId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthManager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ChunkId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field HashDistance", wireType)
+			}
+			m.HashDistance = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.HashDistance |= (int32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipManager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthManager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SetChunkVerificationResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowManager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SetChunkVerificationResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SetChunkVerificationResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Success", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Success = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipManager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthManager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *StreamRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1239,7 +1672,7 @@ func (m *StreamResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetTaskRequest) Unmarshal(dAtA []byte) error {
+func (m *GetJobRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1262,41 +1695,12 @@ func (m *GetTaskRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetTaskRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetJobRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetTaskRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetJobRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowManager
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthManager
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipManager(dAtA[iNdEx:])
@@ -1533,46 +1937,54 @@ var (
 	ErrIntOverflowManager   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("manager.proto", fileDescriptor_manager_26dea584ca0e3de1) }
+func init() { proto.RegisterFile("manager.proto", fileDescriptor_manager_638b39aa5e94bc6b) }
 
-var fileDescriptor_manager_26dea584ca0e3de1 = []byte{
-	// 607 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0xcb, 0x6e, 0xd3, 0x4c,
-	0x14, 0xae, 0xfd, 0xab, 0x69, 0x73, 0xd4, 0x46, 0xd5, 0xf4, 0xfa, 0x3b, 0x60, 0x22, 0x4b, 0x48,
-	0x20, 0x14, 0x9b, 0x06, 0x84, 0x10, 0x4b, 0x10, 0x0a, 0x59, 0xb0, 0x49, 0xda, 0x05, 0x6c, 0xa2,
-	0x49, 0x3c, 0x38, 0x56, 0x6c, 0x8f, 0xf1, 0x8c, 0x13, 0x41, 0x94, 0x0d, 0x4b, 0xb6, 0x6c, 0x78,
-	0x00, 0x1e, 0x84, 0x65, 0x97, 0x48, 0xbc, 0x00, 0x4a, 0x78, 0x10, 0xe4, 0x99, 0x71, 0xea, 0xa4,
-	0x4d, 0x17, 0x5d, 0xd9, 0xe7, 0x32, 0xdf, 0xf7, 0xcd, 0xb9, 0x0c, 0xec, 0x86, 0x38, 0xc2, 0x1e,
-	0x49, 0xec, 0x38, 0xa1, 0x9c, 0xa2, 0x4d, 0xf1, 0x31, 0x76, 0x06, 0x04, 0x07, 0x7c, 0x20, 0x9d,
-	0x46, 0xd5, 0xa3, 0xd4, 0x0b, 0x88, 0x23, 0xac, 0x5e, 0xfa, 0xc1, 0x21, 0x61, 0xcc, 0x3f, 0xa9,
-	0xe0, 0x1d, 0x15, 0xc4, 0xb1, 0xef, 0xe0, 0x28, 0xa2, 0x1c, 0x73, 0x9f, 0x46, 0x4c, 0x45, 0xeb,
-	0x9e, 0xcf, 0x07, 0x69, 0xcf, 0xee, 0xd3, 0xd0, 0xf1, 0xa8, 0x47, 0x2f, 0x31, 0x32, 0x4b, 0x18,
-	0xe2, 0x4f, 0xa5, 0x3f, 0x2b, 0xa4, 0x87, 0x63, 0x9f, 0x0f, 0xe9, 0xd8, 0xf1, 0x68, 0x5d, 0x04,
-	0xeb, 0x23, 0x1c, 0xf8, 0x2e, 0xe6, 0x34, 0x61, 0xce, 0xe2, 0x57, 0x9d, 0x3b, 0xe0, 0x09, 0x8e,
-	0x58, 0x9f, 0xba, 0xa4, 0xcb, 0x31, 0x1b, 0x4a, 0xaf, 0x15, 0xc0, 0x6e, 0x87, 0x27, 0x04, 0x87,
-	0x6d, 0xf2, 0x31, 0x25, 0x8c, 0xa3, 0xfb, 0x50, 0xc1, 0x71, 0x1c, 0xf8, 0x7d, 0xa1, 0xb1, 0xeb,
-	0xbb, 0x27, 0x5a, 0x4d, 0x7b, 0x50, 0x6e, 0xef, 0x16, 0xbc, 0x2d, 0x17, 0x55, 0xa1, 0xcc, 0xc4,
-	0xb9, 0x2c, 0x43, 0x17, 0x19, 0xdb, 0xd2, 0xd1, 0x72, 0xd1, 0x31, 0x6c, 0xa5, 0x8c, 0x24, 0x59,
-	0xe8, 0x3f, 0x11, 0x2a, 0x65, 0x66, 0xcb, 0xb5, 0x18, 0xfc, 0x7f, 0x1e, 0xbb, 0x98, 0x13, 0xc9,
-	0xd9, 0xe1, 0x98, 0xa7, 0x2c, 0x67, 0x2e, 0x9c, 0xd2, 0x8a, 0xa7, 0xae, 0x91, 0xa4, 0x5f, 0x27,
-	0xe9, 0x08, 0x4a, 0x4c, 0x00, 0xe6, 0xa4, 0xd2, 0xb2, 0x5a, 0x50, 0xc9, 0xaf, 0xc8, 0x62, 0x1a,
-	0x31, 0x82, 0x4e, 0x60, 0x2b, 0x24, 0x8c, 0x61, 0x8f, 0x28, 0xa6, 0xdc, 0x44, 0x77, 0x01, 0x68,
-	0xca, 0xe3, 0x94, 0x77, 0xd3, 0x24, 0x50, 0x34, 0x65, 0xe9, 0x39, 0x4f, 0x02, 0xab, 0x06, 0x95,
-	0x26, 0xe1, 0x67, 0x98, 0x0d, 0x73, 0xd1, 0x15, 0xd0, 0x17, 0x7a, 0x75, 0xdf, 0xb5, 0xda, 0xb0,
-	0xd7, 0x24, 0xfc, 0x56, 0x25, 0x2d, 0xdc, 0x5f, 0x2f, 0xde, 0xbf, 0xf1, 0x63, 0x13, 0x2a, 0x6f,
-	0xe5, 0x08, 0x76, 0x48, 0x32, 0xf2, 0xfb, 0x04, 0x8d, 0x61, 0xe7, 0x55, 0x42, 0x16, 0x85, 0x44,
-	0x07, 0xb2, 0x9d, 0xf6, 0x12, 0xb1, 0x71, 0xb8, 0xe2, 0x95, 0xd7, 0xb7, 0x5e, 0x7c, 0xf9, 0xfd,
-	0xf7, 0x9b, 0xfe, 0xd4, 0x6a, 0x88, 0x81, 0x1c, 0x9d, 0x3a, 0xb2, 0x71, 0x4e, 0x5f, 0x20, 0x3a,
-	0x93, 0x65, 0xb1, 0x53, 0x67, 0xb2, 0xe8, 0xf4, 0x14, 0x31, 0x80, 0x0e, 0xa7, 0xf1, 0x6d, 0x68,
-	0x9f, 0x0b, 0xda, 0x86, 0xf5, 0x78, 0x85, 0x96, 0x71, 0x1a, 0xdf, 0x4c, 0xfa, 0x0e, 0xb6, 0x54,
-	0xd9, 0x51, 0x8e, 0xbd, 0xdc, 0x06, 0xc3, 0xc8, 0x29, 0xfd, 0x30, 0x0e, 0xc8, 0x59, 0x3e, 0xe9,
-	0x59, 0x8a, 0x55, 0x15, 0xbc, 0x87, 0x68, 0x7f, 0x85, 0x77, 0x92, 0x41, 0x37, 0xa1, 0xf4, 0x46,
-	0xec, 0x31, 0x3a, 0xb2, 0xe5, 0x96, 0xda, 0xf9, 0xfa, 0xd9, 0xaf, 0xb3, 0x15, 0x36, 0xf6, 0x15,
-	0xb4, 0x4c, 0x93, 0x23, 0x6b, 0xed, 0x09, 0x4c, 0x40, 0xdb, 0x8e, 0x7c, 0x05, 0x3e, 0x23, 0x06,
-	0xe5, 0x45, 0xe3, 0xd1, 0xf1, 0xa5, 0xca, 0xe5, 0xd2, 0xdc, 0xa4, 0xf3, 0x54, 0x60, 0x3e, 0x42,
-	0x0f, 0x57, 0x75, 0xaa, 0xa9, 0x98, 0x5e, 0x29, 0x12, 0xfa, 0xaa, 0x01, 0xba, 0xba, 0x50, 0xa8,
-	0xa6, 0x58, 0xd6, 0xee, 0x9a, 0xb1, 0xe6, 0xb2, 0x6b, 0x47, 0x63, 0xbd, 0x86, 0xac, 0x51, 0x19,
-	0xf2, 0xf4, 0xe5, 0xbd, 0x8b, 0x99, 0xa9, 0xfd, 0x9a, 0x99, 0xda, 0x9f, 0x99, 0xa9, 0x7d, 0x9f,
-	0x9b, 0x1b, 0x3f, 0xe7, 0xa6, 0x76, 0x31, 0x37, 0x37, 0xde, 0xcb, 0x17, 0xb3, 0x57, 0x12, 0x9f,
-	0x27, 0xff, 0x02, 0x00, 0x00, 0xff, 0xff, 0x51, 0xca, 0x1c, 0x8c, 0x50, 0x05, 0x00, 0x00,
+var fileDescriptor_manager_638b39aa5e94bc6b = []byte{
+	// 727 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x55, 0xcf, 0x6e, 0xd3, 0x4e,
+	0x10, 0xae, 0x53, 0x35, 0x4d, 0x46, 0x4d, 0x9b, 0xdf, 0xfe, 0xe8, 0x3f, 0xb7, 0x84, 0xca, 0x15,
+	0x52, 0x11, 0x6a, 0x96, 0x16, 0x84, 0x2a, 0x8e, 0x14, 0x54, 0x82, 0x84, 0x90, 0x12, 0x15, 0x24,
+	0x2e, 0xd1, 0xc6, 0xde, 0x3a, 0x6e, 0x12, 0xaf, 0xf1, 0xae, 0x13, 0x95, 0xc8, 0x17, 0x8e, 0x5c,
+	0xb9, 0x70, 0xe5, 0x05, 0x78, 0x06, 0x8e, 0x3d, 0x22, 0xf1, 0x02, 0xa8, 0xe5, 0x41, 0x90, 0x77,
+	0xd7, 0xf9, 0xd3, 0x26, 0x3d, 0xf4, 0x14, 0xcf, 0xcc, 0xee, 0x7c, 0xdf, 0xcc, 0xec, 0x7c, 0x81,
+	0x42, 0x87, 0xf8, 0xc4, 0xa5, 0x61, 0x39, 0x08, 0x99, 0x60, 0x68, 0x4e, 0xfe, 0x98, 0x0b, 0x4d,
+	0x4a, 0xda, 0xa2, 0xa9, 0x9c, 0xe6, 0x86, 0xcb, 0x98, 0xdb, 0xa6, 0x58, 0x5a, 0x8d, 0xe8, 0x04,
+	0xd3, 0x4e, 0x20, 0xce, 0x74, 0x70, 0x53, 0x07, 0x49, 0xe0, 0x61, 0xe2, 0xfb, 0x4c, 0x10, 0xe1,
+	0x31, 0x9f, 0xeb, 0xe8, 0xae, 0xeb, 0x89, 0x66, 0xd4, 0x28, 0xdb, 0xac, 0x83, 0x5d, 0xe6, 0xb2,
+	0x61, 0x8e, 0xc4, 0x92, 0x86, 0xfc, 0xd2, 0xc7, 0x9f, 0x8e, 0x1c, 0xef, 0xf4, 0x3c, 0xd1, 0x62,
+	0x3d, 0xec, 0xb2, 0x5d, 0x19, 0xdc, 0xed, 0x92, 0xb6, 0xe7, 0x10, 0xc1, 0x42, 0x8e, 0x07, 0x9f,
+	0xfa, 0x5e, 0xb1, 0xc7, 0xc2, 0x56, 0x9d, 0x85, 0x4e, 0x5a, 0x88, 0x25, 0x60, 0xa3, 0x46, 0xc5,
+	0x61, 0x33, 0xf2, 0x5b, 0xef, 0x68, 0xe8, 0x9d, 0x78, 0xb6, 0xe4, 0x55, 0xa5, 0x1f, 0x23, 0xca,
+	0x05, 0x5a, 0x86, 0xec, 0x29, 0x6b, 0xd4, 0x3d, 0x67, 0xcd, 0xd8, 0x32, 0x76, 0xf2, 0xd5, 0xb9,
+	0x53, 0xd6, 0xa8, 0x38, 0x68, 0x1d, 0x72, 0x76, 0x72, 0x25, 0x09, 0x64, 0x64, 0x60, 0x5e, 0xda,
+	0x15, 0x07, 0x6d, 0x43, 0xa1, 0x49, 0x78, 0xb3, 0xee, 0x78, 0x5c, 0x10, 0xdf, 0xa6, 0x6b, 0xb3,
+	0x5b, 0xc6, 0xce, 0x5c, 0x75, 0x21, 0x71, 0xbe, 0xd0, 0x3e, 0xeb, 0x00, 0x36, 0x27, 0xa3, 0xf2,
+	0x80, 0xf9, 0x9c, 0xa2, 0x35, 0x98, 0xe7, 0x91, 0x6d, 0x53, 0xce, 0x25, 0x6e, 0xae, 0x9a, 0x9a,
+	0x56, 0x1b, 0x0a, 0x35, 0x11, 0x52, 0xd2, 0x49, 0x19, 0xde, 0x87, 0x45, 0x12, 0x04, 0x6d, 0x9d,
+	0x61, 0xc8, 0xb4, 0x30, 0xe2, 0xad, 0x38, 0x68, 0x03, 0xf2, 0x5c, 0xde, 0x1b, 0x52, 0xce, 0x29,
+	0x47, 0xc5, 0x41, 0xab, 0x30, 0x1f, 0x71, 0x1a, 0x26, 0xa1, 0x59, 0x19, 0xca, 0x26, 0x66, 0xc5,
+	0xb1, 0x38, 0xac, 0x1f, 0x07, 0x0e, 0x11, 0x54, 0x61, 0xd6, 0x04, 0x11, 0x11, 0x4f, 0x91, 0x47,
+	0x6e, 0x19, 0xa3, 0xb7, 0x26, 0x50, 0xca, 0x4c, 0xa2, 0xb4, 0x02, 0x59, 0x2e, 0x13, 0xa6, 0xa0,
+	0xca, 0xb2, 0x2a, 0xb0, 0x98, 0x96, 0x38, 0x6c, 0x47, 0x87, 0x72, 0x4e, 0x5c, 0xaa, 0x91, 0x52,
+	0x13, 0xdd, 0x05, 0x60, 0x91, 0x08, 0x22, 0x51, 0x8f, 0xc2, 0xb6, 0x86, 0xc9, 0x2b, 0xcf, 0x71,
+	0xd8, 0xb6, 0x96, 0xa0, 0x70, 0x44, 0xc5, 0x6b, 0xd6, 0xd0, 0x9c, 0xad, 0x2a, 0x14, 0x8f, 0xa8,
+	0xb8, 0x55, 0x07, 0x47, 0xca, 0xcd, 0x8c, 0x96, 0xbb, 0xff, 0x23, 0x0b, 0x8b, 0x6f, 0xd4, 0x76,
+	0xd4, 0x68, 0xd8, 0xf5, 0x6c, 0x8a, 0x7a, 0xb0, 0x70, 0x18, 0xd2, 0x41, 0xdf, 0xd0, 0x1d, 0xf5,
+	0xda, 0xca, 0x63, 0xc0, 0xe6, 0xf2, 0x15, 0xaf, 0xaa, 0xd6, 0x7a, 0xf6, 0xf9, 0xf7, 0xdf, 0xaf,
+	0x99, 0x27, 0xd6, 0xbe, 0xdc, 0x95, 0xee, 0x1e, 0x56, 0x73, 0xc2, 0xb6, 0xcc, 0x88, 0xfb, 0xe3,
+	0x64, 0x63, 0xdc, 0x1f, 0x0c, 0x36, 0x46, 0x1c, 0xa0, 0x26, 0x58, 0x70, 0x1b, 0xd8, 0x03, 0x09,
+	0xbb, 0x6f, 0x3d, 0xba, 0x02, 0xcb, 0x05, 0x0b, 0x6e, 0x06, 0xad, 0x40, 0x56, 0x75, 0x79, 0x00,
+	0x38, 0xd6, 0x74, 0xb3, 0xa8, 0xbd, 0xef, 0x59, 0xd8, 0x7a, 0x9b, 0xec, 0x9e, 0xb5, 0x2a, 0xb1,
+	0xfe, 0x43, 0x4b, 0x29, 0x96, 0x4b, 0x45, 0xfd, 0x94, 0x35, 0xd0, 0x11, 0x64, 0x5f, 0x49, 0x49,
+	0x41, 0x2b, 0x65, 0x25, 0x18, 0xe5, 0x54, 0x09, 0xca, 0x2f, 0x13, 0x35, 0x31, 0xff, 0xd7, 0xc9,
+	0xd4, 0x31, 0xf5, 0x22, 0xad, 0xa2, 0xcc, 0x07, 0x28, 0x87, 0x95, 0x20, 0x7d, 0x42, 0x1e, 0xe4,
+	0x07, 0x83, 0x46, 0xab, 0x43, 0x5a, 0xe3, 0xad, 0xb8, 0xce, 0x6c, 0x4f, 0x66, 0x7a, 0x88, 0x1e,
+	0x5c, 0xe9, 0x42, 0x5f, 0xcf, 0x3e, 0xbe, 0xd6, 0x0a, 0xf4, 0xc5, 0x00, 0x74, 0x7d, 0x4b, 0xd0,
+	0x96, 0xce, 0x3d, 0x75, 0x81, 0xcc, 0x29, 0x25, 0x4e, 0x7d, 0x00, 0xd3, 0x39, 0x24, 0xe3, 0x48,
+	0x32, 0xc7, 0xe8, 0xbb, 0x01, 0xe6, 0x24, 0x69, 0xd1, 0xa4, 0xac, 0x74, 0xf6, 0xd3, 0x35, 0xcf,
+	0xdc, 0xbe, 0xf1, 0xcc, 0xb4, 0x47, 0xda, 0x4d, 0x4e, 0x9d, 0xe1, 0xbe, 0x92, 0xcb, 0x18, 0xf7,
+	0x53, 0x81, 0x8c, 0x71, 0x7f, 0x4c, 0x10, 0xe3, 0xe7, 0xf7, 0xce, 0x2f, 0x4a, 0xc6, 0xaf, 0x8b,
+	0x92, 0xf1, 0xe7, 0xa2, 0x64, 0x7c, 0xbb, 0x2c, 0xcd, 0xfc, 0xbc, 0x2c, 0x19, 0xe7, 0x97, 0xa5,
+	0x99, 0x0f, 0xea, 0x6f, 0xa5, 0x91, 0x95, 0x3f, 0x8f, 0xff, 0x05, 0x00, 0x00, 0xff, 0xff, 0xbc,
+	0x39, 0x7b, 0xe6, 0x75, 0x06, 0x00, 0x00,
 }
