@@ -174,7 +174,7 @@
   name = "github.com/prometheus/client_model"
   packages = ["go"]
   pruneopts = "UT"
-  revision = "f287a105a20ec685d797f65cd0ce8fbeaef42da1"
+  revision = "56726106282f1985ea77d5305743db7231b0c0a8"
 
 [[projects]]
   branch = "master"
@@ -227,11 +227,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:70fe2199b42669610a567a228e2fa93ba21977b43b0de2b712cb47e89a952044"
+  digest = "1:86e303cf9248721e0d1d4bcefb30b68c68d50a58f0f4ae9c768075d99584ed79"
   name = "github.com/videocoin/common"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "8183f89e4ae19c39f8fec0064789e482d13fa046"
+  revision = "68307d16f914834fc8b4644d88c2e201c38b7b39"
 
 [[projects]]
   branch = "master"
@@ -247,7 +247,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:89a0cb976397aa9157a45bb2b896d0bcd07ee095ac975e0f03c53250c402265e"
+  digest = "1:293d03d721a8bebb909ff16dad088981a995204f67df318456f92ffe13e8e8cd"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -259,18 +259,18 @@
     "trace",
   ]
   pruneopts = "UT"
-  revision = "1e06a53dbb7e2ed46e91183f219db23c6943c532"
+  revision = "915654e7eabcea33ae277abbecf52f0d8b7a9fdc"
 
 [[projects]]
   branch = "master"
-  digest = "1:5ee4df7ab18e945607ac822de8d10b180baea263b5e8676a1041727543b9c1e4"
+  digest = "1:0150ad9329793acacd98bcbd88492d9e4731824b5d3fbc73a8a1b45eb21acf6b"
   name = "golang.org/x/sys"
   packages = [
     "unix",
     "windows",
   ]
   pruneopts = "UT"
-  revision = "48ac38b7c8cbedd50b1613c0fccacfc7d88dfcdf"
+  revision = "a457fd036447854c0c02e89ea439481bdcf941a2"
 
 [[projects]]
   digest = "1:a2ab62866c75542dd18d2b069fec854577a20211d7c0ea6ae746072a1dccdd18"
@@ -304,10 +304,10 @@
     "googleapis/rpc/status",
   ]
   pruneopts = "UT"
-  revision = "ae2f86662275e140f395167f1dab7081a5bd5fa8"
+  revision = "db91494dd46c1fdcbbde05e5ff5eb56df8f7d79a"
 
 [[projects]]
-  digest = "1:9edd250a3c46675d0679d87540b30c9ed253b19bd1fd1af08f4f5fb3c79fc487"
+  digest = "1:9ab5a33d8cb5c120602a34d2e985ce17956a4e8c2edce7e6961568f95e40c09a"
   name = "google.golang.org/grpc"
   packages = [
     ".",
@@ -343,8 +343,8 @@
     "tap",
   ]
   pruneopts = "UT"
-  revision = "df014850f6dee74ba2fc94874043a9f3f75fbfd8"
-  version = "v1.17.0"
+  revision = "a02b0774206b209466313a0b525d2c738fe407eb"
+  version = "v1.18.0"
 
 [solve-meta]
   analyzer-name = "dep"
