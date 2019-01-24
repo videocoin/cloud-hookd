@@ -84,9 +84,8 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	}
 
 	logger = logger.WithFields(logrus.Fields{
-		"uid": streamInfo.UserID,
-		"cid": streamInfo.CameraID,
-		"aid": streamInfo.CameraID,
+		"uid":     streamInfo.UserID,
+		"address": streamInfo.StreamID,
 	})
 
 	logger.Info("getting user profile")
@@ -100,9 +99,8 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	// }
 
 	managerResp, err := h.manager.CreateStream(ctx, &pb.StreamRequest{
-		ApplicationId: streamInfo.CameraID,
-		UserId:        streamInfo.UserID,
-		StreamId:      streamInfo.CameraID,
+		UserId:   streamInfo.UserID,
+		StreamId: streamInfo.StreamID,
 	})
 
 	logger.Debugf("manager response: %+v", managerResp)
@@ -169,7 +167,7 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 
 	logger = logger.WithFields(logrus.Fields{
 		"uid": streamInfo.UserID,
-		"cid": streamInfo.CameraID,
+		"cid": streamInfo.StreamID,
 	})
 
 	// logger.Info("getting user profile")
@@ -183,9 +181,8 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 	// }
 
 	managerResp, err := h.manager.StopStream(ctx, &pb.StreamRequest{
-		ApplicationId: streamInfo.CameraID,
-		UserId:        streamInfo.UserID,
-		StreamId:      streamInfo.CameraID,
+		UserId:   streamInfo.UserID,
+		StreamId: streamInfo.StreamID,
 	})
 
 	logger.Debugf("manager response: %+v", managerResp)

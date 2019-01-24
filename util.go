@@ -7,16 +7,16 @@ import (
 
 // Common ingest errors
 var (
-	ErrEmptyStream     = fmt.Errorf("stream is empty")
-	ErrInvalidStream   = fmt.Errorf("invalid stream name")
-	ErrInvalidUserID   = fmt.Errorf("invalid user id")
-	ErrInvalidCameraID = fmt.Errorf("invalid camera id")
+	ErrEmptyStream            = fmt.Errorf("stream is empty")
+	ErrInvalidStream          = fmt.Errorf("invalid stream name")
+	ErrInvalidUserID          = fmt.Errorf("invalid user id")
+	ErrInvalidContractAddress = fmt.Errorf("invalid contract address")
 )
 
 // StreamInfo used to parsing incoming rtmp stream
 type StreamInfo struct {
 	UserID   string
-	CameraID string
+	StreamID string
 }
 
 // ParseStreamName parses stream info from rtmp url
@@ -33,7 +33,7 @@ func ParseStreamName(name string) (*StreamInfo, error) {
 	streamInfo := new(StreamInfo)
 
 	streamInfo.UserID = parts[0]
-	streamInfo.CameraID = parts[1]
+	streamInfo.StreamID = parts[1]
 
 	fmt.Printf("%+v", parts)
 
@@ -41,8 +41,8 @@ func ParseStreamName(name string) (*StreamInfo, error) {
 		return nil, ErrInvalidUserID
 	}
 
-	if len(streamInfo.CameraID) == 0 {
-		return nil, ErrInvalidCameraID
+	if len(streamInfo.StreamID) == 0 {
+		return nil, ErrInvalidContractAddress
 	}
 
 	return streamInfo, nil

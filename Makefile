@@ -58,3 +58,8 @@ docker-save:
 	@echo "==> Saving docker image tarball..."
 	gcloud auth configure-docker --quiet
 	docker save -o $(IMAGE_TARBALL_PATH) $(IMAGE_TAG)
+
+proto-update:
+	env GO111MODULE=on go get github.com/videocoin/common@latest
+	env GO111MODULE=on go mod vendor
+	env GO111MODULE=on go mod tidy
