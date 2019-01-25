@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
+	pb "github.com/VideoCoin/common/proto"
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
-	pb "github.com/videocoin/common/proto"
 )
 
 // Common hook errors
@@ -84,8 +84,8 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	}
 
 	logger = logger.WithFields(logrus.Fields{
-		"uid":     streamInfo.UserID,
-		"address": streamInfo.StreamID,
+		"wallet_address": streamInfo.WalletAddress,
+		"stream_id":      streamInfo.StreamID,
 	})
 
 	logger.Info("getting user profile")
@@ -99,8 +99,8 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	// }
 
 	managerResp, err := h.manager.CreateStream(ctx, &pb.StreamRequest{
-		UserId:   streamInfo.UserID,
-		StreamId: streamInfo.StreamID,
+		WalletAddress: streamInfo.WalletAddress,
+		StreamId:      streamInfo.StreamID,
 	})
 
 	logger.Debugf("manager response: %+v", managerResp)
@@ -119,7 +119,7 @@ func (h *Hook) handleUpdatePublish(r *http.Request) error {
 	// }
 
 	// logger = logger.WithFields(logrus.Fields{
-	// 	"uid": streamInfo.UserID,
+	// 	"uid": streamInfo.WalletAddress,
 	// 	"cid": streamInfo.CameraID,
 	// })
 
@@ -127,7 +127,7 @@ func (h *Hook) handleUpdatePublish(r *http.Request) error {
 
 	// ctx := context.Background()
 	// tokenReq := &pb.OAuth2TokenRequest{
-	// 	UserId: streamInfo.UserID,
+	// 	WalletAddress: streamInfo.WalletAddress,
 	// 	AppId:  "web",
 	// }
 	// tokenResp, err := h.profile.GetOAuth2Token(ctx, tokenReq)
@@ -142,7 +142,7 @@ func (h *Hook) handleUpdatePublish(r *http.Request) error {
 
 	// cameraReq := &pb.InternalCameraRequest{
 	// 	ID:      streamInfo.CameraID,
-	// 	OwnerID: tokenResp.UserId,
+	// 	OwnerID: tokenResp.WalletAddress,
 	// }
 	// cameraResp, err := h.cameras.GetCamera(ctx, cameraReq)
 	// if err != nil {
@@ -166,7 +166,7 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 	}
 
 	logger = logger.WithFields(logrus.Fields{
-		"uid": streamInfo.UserID,
+		"uid": streamInfo.WalletAddress,
 		"cid": streamInfo.StreamID,
 	})
 
@@ -181,8 +181,8 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 	// }
 
 	managerResp, err := h.manager.StopStream(ctx, &pb.StreamRequest{
-		UserId:   streamInfo.UserID,
-		StreamId: streamInfo.StreamID,
+		WalletAddress: streamInfo.WalletAddress,
+		StreamId:      streamInfo.StreamID,
 	})
 
 	logger.Debugf("manager response: %+v", managerResp)

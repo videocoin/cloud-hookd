@@ -3,12 +3,12 @@ package hookd
 import (
 	"context"
 
+	pb "github.com/VideoCoin/common/proto"
+	"github.com/VideoCoin/hookd/pkg/grpcclient"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/labstack/echo"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/sirupsen/logrus"
-	pb "github.com/videocoin/common/proto"
-	"github.com/videocoin/hookd/pkg/grpcclient"
 	"google.golang.org/grpc"
 )
 
