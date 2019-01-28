@@ -2,7 +2,7 @@ FROM golang:1.11-rc-alpine AS builder
 
 RUN apk update && apk add --update build-base alpine-sdk musl-dev musl
 
-WORKDIR /go/src/github.com/videocoin/hookd
+WORKDIR /go/src/github.com/VideoCoin/hookd
 
 ADD . ./
 
@@ -12,7 +12,7 @@ RUN make build-alpine
 
 FROM alpine:latest AS release
 
-COPY --from=builder /go/src/github.com/videocoin/hookd/bin/hookd ./
+COPY --from=builder /go/src/github.com/VideoCoin/hookd/bin/hookd ./
 
 ENTRYPOINT ./hookd
 
