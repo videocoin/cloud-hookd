@@ -18,7 +18,7 @@ LATEST=$(DOCKER_REGISTRY)/${PROJECT_ID}/$(SERVICE_NAME):latest
 
 IMAGE_TARBALL_PATH=$(CIRCLE_ARTIFACTS)/$(SERVICE_NAME)-$(VERSION).tar
 
-main: docker push
+main: build docker push
 
 version:
 	@echo $(VERSION)
@@ -35,6 +35,9 @@ build:
 	go build -o bin/$(SERVICE_NAME) cmd/main.go
 
 build-alpine:
+	export GOOS=linux
+	export GOARCH=amd64
+	export CGO_ENABLED=0
 	go build -o bin/$(SERVICE_NAME) --ldflags '-w -linkmode external -extldflags "-static"' cmd/main.go
 
 test:

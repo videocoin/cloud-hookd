@@ -1,18 +1,10 @@
-FROM golang:1.11-rc-alpine AS builder
+FROM ubuntu:latest AS release
 
-RUN apk update && apk add --update build-base alpine-sdk musl-dev musl
+WORKDIR /opt/
 
-WORKDIR /go/src/github.com/VideoCoin/hookd
+RUN apt update && apt upgrade -y
 
-ADD . ./
-
-ENV GO111MODULE off
-
-RUN make build-alpine
-
-FROM alpine:latest AS release
-
-COPY --from=builder /go/src/github.com/VideoCoin/hookd/bin/hookd ./
+ADD bin/hookd ./
 
 ENTRYPOINT ./hookd
 
