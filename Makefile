@@ -58,7 +58,7 @@ push:
 	@echo "==> Pushing $(IMAGE_TAG)..."
 	gcloud docker -- push $(IMAGE_TAG)
 	gcloud docker -- push $(LATEST)
-	
+
 
 docker-save:
 	@echo "==> Saving docker image tarball..."
@@ -69,3 +69,18 @@ proto-update:
 	env GO111MODULE=on go get github.com/VideoCoin/common@latest
 	env GO111MODULE=on go mod vendor
 	env GO111MODULE=on go mod tidy
+
+package:
+	cd cmd && xgo --targets=linux/amd64 -dest ../release -out $(SERVICE_NAME) .
+	cp keys/$(SERVICE_NAME).key release
+	tar -C release -cvjf release/$(VERSION)_$(SERVICE_NAME)_linux_amd64.tar.bz2 $(SERVICE_NAME)-linux-amd64 $(SERVICE_NAME).key
+
+store:
+	gsutil -m cp release/$(VERSION)_$(SERVICE_NAME)_linux_amd64.tar.bz2 gs://${RELEASE_BUCKET}/$(SERVICE_NAME)/
+	gsutil -m cp gs://${RELEASE_BUCKET}/$(SERVICE_NAME)/$(VERSION)_$(SERVICE_NAME)_linux_amd64.tar.bz2 gs://${RELEASE_BUCKET}/$(SERVICE_NAME)/latest_$(SERVICE_NAME)_linux_amd64.tar.bz2
+
+clean:
+	rm -rf release/*
+
+
+publish: package store clean
