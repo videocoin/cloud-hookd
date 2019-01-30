@@ -4,7 +4,7 @@ WORKDIR /opt/
 
 RUN apt update && apt upgrade -y
 
-ADD bin/hookd ./
+ADD release/hookd-linux-amd64 ./
 
-ENTRYPOINT ./hookd
+ENTRYPOINT ./hookd-linux-amd64
 
