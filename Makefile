@@ -32,6 +32,9 @@ deps:
 
 build:
 	@echo "==> Building..."
+	export GOOS=linux
+	export GOARCH=amd64
+	export CGO_ENABLED=0
 	go build -o bin/$(SERVICE_NAME) cmd/main.go
 
 build-alpine:
