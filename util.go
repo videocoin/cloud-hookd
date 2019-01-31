@@ -2,6 +2,7 @@ package hookd
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -16,7 +17,7 @@ var (
 // StreamInfo used to parsing incoming rtmp stream
 type StreamInfo struct {
 	WalletAddress string
-	StreamID      string
+	StreamID      int64
 }
 
 // ParseStreamName parses stream info from rtmp url
@@ -32,8 +33,13 @@ func ParseStreamName(name string) (*StreamInfo, error) {
 
 	streamInfo := new(StreamInfo)
 
-	streamInfo.WalletAddress = parts[0]
-	streamInfo.StreamID = parts[1]
+	var err error
+
+	streamInfo.WalletAddress = parts[1]
+	streamInfo.StreamID, err = strconv.ParseInt(parts[0], 10, 64)
+	if err != nil {
+		return nil, err
+	}
 
 	fmt.Printf("%+v", parts)
 
@@ -41,7 +47,7 @@ func ParseStreamName(name string) (*StreamInfo, error) {
 		return nil, ErrInvalidWalletAddress
 	}
 
-	if len(streamInfo.StreamID) == 0 {
+	if streamInfo.StreamID == 0 {
 		return nil, ErrInvalidContractAddress
 	}
 
