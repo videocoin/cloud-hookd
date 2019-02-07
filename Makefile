@@ -1,6 +1,6 @@
 .NOTPARALLEL:
 .EXPORT_ALL_VARIABLES:
-.DEFAULT_GOAL := main
+.DEFAULT_GOAL := docker
 
 DOCKER_REGISTRY = us.gcr.io
 CIRCLE_ARTIFACTS = ./bin
@@ -48,7 +48,11 @@ test-coverage:
 	go test -cover ./...
 
 docker:
-	docker build  -t ${IMAGE_TAG} -t $(LATEST) . --squash
+	@echo "==> Docker building..."
+	cd cmd && xgo --ldflags '-w -linkmode external -extldflags "-static"' --targets=linux/amd64 -dest ../release -out $(SERVICE_NAME) .
+	docker build -t $(IMAGE_TAG) -t $(LATEST) . --squash
+	docker push $(IMAGE_TAG)
+	docker push $(LATEST)
 
 push:
 	@echo "==> Pushing $(IMAGE_TAG)..."
