@@ -19,7 +19,7 @@ var (
 // Hook struct used for managing hooks
 type Hook struct {
 	e       *echo.Echo
-	logger  *logrus.Entry
+	log     *logrus.Entry
 	manager pb.ManagerServiceClient
 }
 
@@ -28,12 +28,12 @@ func NewHook(
 	e *echo.Echo,
 	prefix string,
 	manager pb.ManagerServiceClient,
-	logger *logrus.Entry,
+	log *logrus.Entry,
 ) (*Hook, error) {
 	hook := &Hook{
 		e:       e,
 		manager: manager,
-		logger:  logger,
+		log:     log,
 	}
 	hook.e.Any(prefix, hook.handleHook)
 	return hook, nil
@@ -44,18 +44,16 @@ func (h *Hook) handleHook(c echo.Context) error {
 
 	err := req.ParseForm()
 	if err != nil {
-		h.logger.Errorf("failed to parse form: %s", err)
+		h.log.Errorf("failed to parse form: %s", err)
 		return ErrBadRequest
 	}
 
-	h.logger.Debugf("handle hook %+v", req.Form)
+	h.log.Debugf("handle hook %+v", req.Form)
 
 	call := req.FormValue("call")
 	switch call {
 	case "publish":
 		err = h.handlePublish(req)
-	case "update_publish":
-		err = h.handleUpdatePublish(req)
 	case "publish_done":
 		err = h.handlePublishDone(req)
 	case "record":
@@ -74,118 +72,60 @@ func (h *Hook) handleHook(c echo.Context) error {
 }
 
 func (h *Hook) handlePublish(r *http.Request) error {
-	logger := h.logger.WithField("hook", "publish")
-	logger.Info("handling publish hook")
+	h.log.Info("handling publish hook")
 
 	streamInfo, err := ParseStreamName(r.FormValue("name"))
 	if err != nil {
-		logger.Warningf("failed to parse stream name: %s", err)
+		h.log.Warnf("failed to parse stream name: %s", err)
 		return ErrBadRequest
 	}
 
-	logger = logger.WithFields(logrus.Fields{
+	h.log = h.log.WithFields(logrus.Fields{
 		"wallet_address": streamInfo.WalletAddress,
 		"stream_id":      streamInfo.StreamID,
 	})
 
-	logger.Info("getting user profile")
+	h.log.Info("getting user profile")
 
 	ctx := context.Background()
 
-	logger.Info("marking camera as on air")
-
-	// cameraReq := &pb.InternalCameraRequest{
-	// 	ID: streamInfo.CameraID,
-	// }
+	h.log.Info("marking camera as on air")
 
 	managerResp, err := h.manager.CreateStream(ctx, &pb.StreamRequest{
 		WalletAddress: streamInfo.WalletAddress,
 		StreamId:      streamInfo.StreamID,
 	})
 
-	logger.Debugf("manager response: %+v", managerResp)
-
-	return nil
-}
-
-func (h *Hook) handleUpdatePublish(r *http.Request) error {
-	// logger := h.logger.WithField("hook", "update_publish")
-	// logger.Info("handling hook")
-
-	// streamInfo, err := ParseStreamName(r.FormValue("name"))
-	// if err != nil {
-	// 	logger.Warningf("failed to parse stream name: %s", err)
-	// 	return ErrBadRequest
-	// }
-
-	// logger = logger.WithFields(logrus.Fields{
-	// 	"uid": streamInfo.WalletAddress,
-	// 	"cid": streamInfo.CameraID,
-	// })
-
-	// logger.Info("getting user profile")
-
-	// ctx := context.Background()
-	// tokenReq := &pb.OAuth2TokenRequest{
-	// 	WalletAddress: streamInfo.WalletAddress,
-	// 	AppId:  "web",
-	// }
-	// tokenResp, err := h.profile.GetOAuth2Token(ctx, tokenReq)
-	// if err != nil {
-	// 	logger.Errorf("failed to get oath2 token: %s", err)
-	// 	return ErrBadRequest
-	// }
-
-	// logger.Debugf("token response: %+v", tokenResp)
-
-	// logger.Info("getting camera")
-
-	// cameraReq := &pb.InternalCameraRequest{
-	// 	ID:      streamInfo.CameraID,
-	// 	OwnerID: tokenResp.WalletAddress,
-	// }
-	// cameraResp, err := h.cameras.GetCamera(ctx, cameraReq)
-	// if err != nil {
-	// 	logger.Errorf("failed to get camera: %s", err)
-	// 	return ErrBadRequest
-	// }
-
-	// logger.Debugf("camera response: %+v", cameraResp)
+	h.log.Debugf("manager response: %+v", managerResp)
 
 	return nil
 }
 
 func (h *Hook) handlePublishDone(r *http.Request) error {
-	logger := h.logger.WithField("hook", "publish_done")
-	logger.Info("handling publish done hook")
+
+	h.log.Info("handling publish done hook")
 
 	streamInfo, err := ParseStreamName(r.FormValue("name"))
 	if err != nil {
-		logger.Warningf("failed to parse stream name: %s", err)
+		h.log.Warningf("failed to parse stream name: %s", err)
 		return ErrBadRequest
 	}
 
-	logger = logger.WithFields(logrus.Fields{
+	h.log = h.log.WithFields(logrus.Fields{
 		"uid": streamInfo.WalletAddress,
 		"cid": streamInfo.StreamID,
 	})
 
-	// logger.Info("getting user profile")
-
 	ctx := context.Background()
 
-	logger.Info("marking stream as offline")
-
-	// cameraReq := &pb.InternalCameraRequest{
-	// 	ID: streamInfo.CameraID,
-	// }
+	h.log.Info("marking stream as offline")
 
 	managerResp, err := h.manager.StopStream(ctx, &pb.StreamRequest{
 		WalletAddress: streamInfo.WalletAddress,
 		StreamId:      streamInfo.StreamID,
 	})
 
-	logger.Debugf("manager response: %+v", managerResp)
+	h.log.Debugf("manager response: %+v", managerResp)
 
 	return nil
 

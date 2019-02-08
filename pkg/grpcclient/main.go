@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc/keepalive"
 )
 
-func DialOpts(logger *logrus.Entry) []grpc.DialOption {
+func DialOpts(log *logrus.Entry) []grpc.DialOption {
 	tracerOpts := grpctracing.WithTracer(opentracing.GlobalTracer())
 	// retryOpts := []grpcretry.CallOption{
 	// 	grpcretry.WithMax(3),
@@ -26,7 +26,7 @@ func DialOpts(logger *logrus.Entry) []grpc.DialOption {
 		grpc.WithInsecure(),
 		grpc.WithUnaryInterceptor(
 			grpc.UnaryClientInterceptor(grpcmiddleware.ChainUnaryClient(
-				grpclogrus.UnaryClientInterceptor(logger),
+				grpclogrus.UnaryClientInterceptor(log),
 				grpctracing.UnaryClientInterceptor(tracerOpts),
 				grpcprometheus.UnaryClientInterceptor,
 				// grpcretry.UnaryClientInterceptor(retryOpts...),
@@ -34,7 +34,7 @@ func DialOpts(logger *logrus.Entry) []grpc.DialOption {
 		),
 		grpc.WithStreamInterceptor(
 			grpc.StreamClientInterceptor(grpcmiddleware.ChainStreamClient(
-				grpclogrus.StreamClientInterceptor(logger),
+				grpclogrus.StreamClientInterceptor(log),
 				grpctracing.StreamClientInterceptor(tracerOpts),
 				grpcprometheus.StreamClientInterceptor,
 				// grpcretry.StreamClientInterceptor(retryOpts...),

@@ -21,17 +21,17 @@ type HTTPServerConfig struct {
 }
 
 // HTTPServer http server reciver
-// holds echo, config, and logger objects
+// holds echo, config, and log objects
 type HTTPServer struct {
 	cfg    *HTTPServerConfig
 	e      *echo.Echo
-	logger *logrus.Entry
+	log *logrus.Entry
 	hook   *Hook
 }
 
 // NewHTTPServer returns reference to new HTTPServer object
-func NewHTTPServer(cfg *HTTPServerConfig, logger *logrus.Entry) (*HTTPServer, error) {
-	grpcDialOpts := grpcclient.DialOpts(logger)
+func NewHTTPServer(cfg *HTTPServerConfig, log *logrus.Entry) (*HTTPServer, error) {
+	grpcDialOpts := grpcclient.DialOpts(log)
 
 	managerConn, err := grpc.Dial(cfg.ManagerRPCADDR, grpcDialOpts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func NewHTTPServer(cfg *HTTPServerConfig, logger *logrus.Entry) (*HTTPServer, er
 		e,
 		"/hook",
 		manager,
-		logger.WithField("system", "hook"),
+		log.WithField("system", "hook"),
 	)
 	if err != nil {
 		return nil, err
@@ -67,19 +67,19 @@ func NewHTTPServer(cfg *HTTPServerConfig, logger *logrus.Entry) (*HTTPServer, er
 	return &HTTPServer{
 		cfg:    cfg,
 		e:      e,
-		logger: logger,
+		log: log,
 		hook:   hook,
 	}, nil
 }
 
 // Start starts echo server
 func (s *HTTPServer) Start() error {
-	s.logger.Infof("http server listening on %s", s.cfg.Addr)
+	s.log.Infof("http server listening on %s", s.cfg.Addr)
 	return s.e.Start(s.cfg.Addr)
 }
 
 // Stop does nothing
 func (s *HTTPServer) Stop() error {
-	s.logger.Infof("stopping http server")
+	s.log.Infof("stopping http server")
 	return nil
 }

@@ -5,12 +5,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/labstack/gommon/log"
+	"github.com/sirupsen/logrus"
 )
 
 // Service struct used for hookd service object
 type Service struct {
-	logger     *log.Entry
+	log        *logrus.Entry
 	cfg        *Config
 	HTTPServer *HTTPServer
 }
@@ -23,13 +24,13 @@ func NewService(cfg *Config) (*Service, error) {
 	}
 	HTTPServer, err := NewHTTPServer(
 		httpServerCfg,
-		log.WithField("system", "http-server"),
+		logrus.WithField("system", "http-server"),
 	)
 	if err != nil {
 		panic(err)
 	}
 	return &Service{
-		logger:     log.New().WithField("name", "hookd"),
+		log:        logrus.New().WithField("name", "hookd"),
 		cfg:        cfg,
 		HTTPServer: HTTPServer,
 	}, nil
@@ -39,12 +40,12 @@ func NewService(cfg *Config) (*Service, error) {
 func Start() {
 	cfg := LoadConfig()
 
-	level, err := log.ParseLevel(cfg.Loglevel)
+	level, err := logrus.ParseLevel(cfg.Loglevel)
 	if err != nil {
 		panic(err)
 	}
 
-	log.SetLevel(level)
+	logrus.SetLevel(level)
 
 	signals := make(chan os.Signal, 1)
 	done := make(chan bool, 1)
