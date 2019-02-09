@@ -3,7 +3,7 @@ FROM ubuntu:latest AS release
 LABEL maintainer="Videocoin" description="nginx hooks"
 
 RUN apt update && apt upgrade -y
-RUN apt install ca-certificates -y
+RUN apt install ca-certificates build-essential -y
 
 WORKDIR /go/src/github.com/VideoCoin/hookd
 
