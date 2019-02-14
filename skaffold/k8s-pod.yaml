@@ -20,4 +20,7 @@ spec:
       - name: hookd
         image: us.gcr.io/videocoin-183500/hookd:latest
         imagePullPolicy: Always
-        resources: {}
+        resources:
+        env:
+          - name: ADDR
+            value: 0.0.0.0:8888
