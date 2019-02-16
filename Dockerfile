@@ -1,9 +1,9 @@
-FROM ubuntu:latest AS release
+FROM debian:jessie-slim AS release
 
 LABEL maintainer="Videocoin" description="nginx hooks"
 
 RUN apt update && apt upgrade -y
-RUN apt install ca-certificates build-essential -y
+RUN apt install ca-certificates -y
 
 WORKDIR /go/src/github.com/VideoCoin/hookd
 
