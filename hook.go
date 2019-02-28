@@ -91,9 +91,9 @@ func (h *Hook) handlePublish(r *http.Request) error {
 
 	h.log.Info("marking camera as on air")
 
-	managerResp, err := h.manager.CreateStream(ctx, &pb.StreamRequest{
-		WalletAddress: streamInfo.WalletAddress,
-		StreamId:      streamInfo.StreamID,
+	managerResp, err := h.manager.UpdateStreamStatus(ctx, &pb.UpdateStreamStatusRequest{
+		StreamId: streamInfo.StreamID,
+		Status:   pb.WorkOrderStatusWorkStarted.String(),
 	})
 
 	h.log.Debugf("manager response: %+v", managerResp)
@@ -120,7 +120,7 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 
 	h.log.Info("marking stream as offline")
 
-	managerResp, err := h.manager.StopStream(ctx, &pb.StreamRequest{
+	managerResp, err := h.manager.StopStream(ctx, &pb.StopStreamRequest{
 		WalletAddress: streamInfo.WalletAddress,
 		StreamId:      streamInfo.StreamID,
 	})
