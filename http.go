@@ -4,7 +4,7 @@ import (
 	"context"
 
 	pb "github.com/VideoCoin/common/proto"
-	"github.com/VideoCoin/hookd/pkg/grpcclient"
+
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/labstack/echo"
 	"github.com/prometheus/client_golang/prometheus"
@@ -23,17 +23,17 @@ type HTTPServerConfig struct {
 // HTTPServer http server reciver
 // holds echo, config, and log objects
 type HTTPServer struct {
-	cfg    *HTTPServerConfig
-	e      *echo.Echo
-	log *logrus.Entry
-	hook   *Hook
+	cfg  *HTTPServerConfig
+	e    *echo.Echo
+	log  *logrus.Entry
+	hook *Hook
 }
 
 // NewHTTPServer returns reference to new HTTPServer object
 func NewHTTPServer(cfg *HTTPServerConfig, log *logrus.Entry) (*HTTPServer, error) {
-	grpcDialOpts := grpcclient.DialOpts(log)
+	opts := []grpc.DialOption{grpc.WithInsecure()}
 
-	managerConn, err := grpc.Dial(cfg.ManagerRPCADDR, grpcDialOpts...)
+	managerConn, err := grpc.Dial(cfg.ManagerRPCADDR, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -65,10 +65,10 @@ func NewHTTPServer(cfg *HTTPServerConfig, log *logrus.Entry) (*HTTPServer, error
 	}
 
 	return &HTTPServer{
-		cfg:    cfg,
-		e:      e,
-		log: log,
-		hook:   hook,
+		cfg:  cfg,
+		e:    e,
+		log:  log,
+		hook: hook,
 	}, nil
 }
 
