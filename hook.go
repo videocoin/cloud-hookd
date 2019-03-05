@@ -112,8 +112,8 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 	}
 
 	h.log = h.log.WithFields(logrus.Fields{
-		"uid": streamInfo.WalletAddress,
-		"cid": streamInfo.StreamID,
+		"wallet_address": streamInfo.WalletAddress,
+		"stream_id":      streamInfo.StreamID,
 	})
 
 	ctx := context.Background()
