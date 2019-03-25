@@ -4,7 +4,6 @@ metadata:
   name: hookd
 spec:
   type: LoadBalancer
-  loadBalancerIP: 35.185.249.130
   selector:
     app: hookd
   ports:
