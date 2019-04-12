@@ -92,8 +92,9 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	h.log.Info("marking camera as on air")
 
 	managerResp, err := h.manager.UpdateStreamStatus(ctx, &pb.UpdateStreamStatusRequest{
-		StreamId: streamInfo.StreamID,
-		Status:   pb.WorkOrderStatusWorkStarted.String(),
+		StreamId:     streamInfo.StreamID,
+		Status:       pb.WorkOrderStatusWorkStarted.String(),
+		IngestStatus: pb.IngestStatusActive.String(),
 	})
 
 	h.log.Debugf("manager response: %+v", managerResp)
