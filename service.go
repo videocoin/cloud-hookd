@@ -16,6 +16,10 @@ type Service struct {
 	HTTPServer *HTTPServer
 }
 
+func init() {
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+}
+
 // NewService returns new	ingest hook service
 func NewService(cfg *Config) (*Service, error) {
 	httpServerCfg := &HTTPServerConfig{
