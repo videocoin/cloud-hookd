@@ -94,7 +94,7 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	managerResp, err := h.manager.UpdateStreamStatus(ctx, &pb.UpdateStreamStatusRequest{
 		StreamId:     streamInfo.StreamID,
 		Status:       pb.WorkOrderStatusWorkStarted.String(),
-		IngestStatus: pb.IngestStatusActive.String(),
+		IngestStatus: pb.IngestStatusActive,
 	})
 
 	h.log.Debugf("manager response: %+v", managerResp)
