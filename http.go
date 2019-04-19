@@ -3,7 +3,7 @@ package hookd
 import (
 	"context"
 
-	pb "github.com/VideoCoin/common/proto"
+	manager_v1 "github.com/VideoCoin/cloud-api/manager/v1"
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/labstack/echo"
@@ -38,7 +38,7 @@ func NewHTTPServer(cfg *HTTPServerConfig, log *logrus.Entry) (*HTTPServer, error
 		return nil, err
 	}
 
-	manager := pb.NewManagerServiceClient(managerConn)
+	manager := manager_v1.NewManagerServiceClient(managerConn)
 
 	e := echo.New()
 	e.HideBanner = true

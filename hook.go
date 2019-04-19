@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	pb "github.com/VideoCoin/common/proto"
+	manager_v1 "github.com/VideoCoin/cloud-api/manager/v1"
+	workorder_v1 "github.com/VideoCoin/cloud-api/workorder/v1"
+
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
 )
@@ -20,14 +22,14 @@ var (
 type Hook struct {
 	e       *echo.Echo
 	log     *logrus.Entry
-	manager pb.ManagerServiceClient
+	manager manager_v1.ManagerServiceClient
 }
 
 // NewHook returns new hook reference
 func NewHook(
 	e *echo.Echo,
 	prefix string,
-	manager pb.ManagerServiceClient,
+	manager manager_v1.ManagerServiceClient,
 	log *logrus.Entry,
 ) (*Hook, error) {
 	hook := &Hook{
@@ -91,10 +93,10 @@ func (h *Hook) handlePublish(r *http.Request) error {
 
 	h.log.Info("marking camera as on air")
 
-	managerResp, err := h.manager.UpdateStreamStatus(ctx, &pb.UpdateStreamStatusRequest{
+	managerResp, err := h.manager.UpdateStreamStatus(ctx, &manager_v1.UpdateStreamStatusRequest{
 		StreamId:     streamInfo.StreamID,
-		Status:       pb.WorkOrderStatusWorkStarted.String(),
-		IngestStatus: pb.IngestStatusActive,
+		Status:       workorder_v1.WorkOrderStatusWorkStarted.String(),
+		IngestStatus: workorder_v1.IngestStatusActive,
 	})
 
 	h.log.Debugf("manager response: %+v", managerResp)
@@ -121,7 +123,7 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 
 	h.log.Info("marking stream as offline")
 
-	managerResp, err := h.manager.StopStream(ctx, &pb.StopStreamRequest{
+	managerResp, err := h.manager.StopStream(ctx, &manager_v1.StopStreamRequest{
 		WalletAddress: streamInfo.WalletAddress,
 		StreamId:      streamInfo.StreamID,
 	})
