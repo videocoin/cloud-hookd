@@ -4,10 +4,10 @@ import (
 	"context"
 
 	manager_v1 "github.com/VideoCoin/cloud-api/manager/v1"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/labstack/echo"
-	"github.com/prometheus/client_golang/prometheus"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 )
@@ -44,7 +44,7 @@ func NewHTTPServer(cfg *HTTPServerConfig, log *logrus.Entry) (*HTTPServer, error
 	e.HideBanner = true
 	e.HidePort = true
 
-	e.GET("/metrics", echo.WrapHandler(prometheus.Handler()))
+	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 	e.GET("/healthz", func(c echo.Context) error {
 		return c.JSON(200, map[string]string{"status": "OK"})
 	})
