@@ -1,4 +1,4 @@
-FROM debian:jessie-slim AS release
+FROM golang:latest AS builder
 
 LABEL maintainer="Videocoin" description="nginx hooks"
 
@@ -7,8 +7,14 @@ RUN apt install ca-certificates -y
 
 WORKDIR /go/src/github.com/VideoCoin/hookd
 
-ADD release/hookd-linux-amd64 ./
+ADD ./ ./
 
-EXPOSE 50051 50052 50053 50054 50055
+RUN make build
 
-ENTRYPOINT [ "./hookd-linux-amd64" ]
+FROM ubuntu:latest AS release
+
+
+COPY --from=builder /go/src/github.com/VideoCoin/hookd/bin/hookd ./
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+
+ENTRYPOINT [ "./hookd" ]
