@@ -23,23 +23,20 @@ version:
 
 image-tag:
 	@echo $(IMAGE_TAG)
-
 deps:
-	 go mod vendor && go mod verify
-
-
+	@echo "==> Running go mod..."
+	env GO111MODULE=on go mod vendor
 build:
-	cd cmd && xgo --targets=linux/amd64 -dest ../release -out $(SERVICE_NAME) .
-
-build-alpine:
 	export GOOS=linux
 	export GOARCH=amd64
 	export CGO_ENABLED=0
-	go build -o bin/$(SERVICE_NAME) --ldflags '-w -linkmode external -extldflags "-static"' cmd/main.go
+	@echo "==> Building..."
+	@go build -a -installsuffix cgo -ldflags="-w -s" -o bin/$(SERVICE_NAME) cmd/main.go
+
 
 test:
 	@echo "==> Running tests..."
-	go test -v ./...
+	@go test -v ./...
 
 test-coverage:
 	@echo "==> Running tests..."
@@ -47,15 +44,11 @@ test-coverage:
 
 docker:
 	@echo "==> Docker building..."
-	cd cmd && xgo -v --targets=linux/amd64 -dest ../release -out $(SERVICE_NAME) .
-	docker build -t $(IMAGE_TAG) -t $(LATEST) . --squash
-	docker push $(IMAGE_TAG)
-	docker push $(LATEST)
+	@docker build -t $(IMAGE_TAG) -t $(LATEST) . --squash
 
-proto-update:
-	env GO111MODULE=on go get github.com/VideoCoin/common@latest
-	env GO111MODULE=on go mod vendor
-	env GO111MODULE=on go mod tidy
+push:
+	@docker push $(IMAGE_TAG)
+	@docker push $(LATEST)
 
 clean:
 	rm -rf release/*
