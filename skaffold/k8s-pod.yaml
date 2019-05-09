@@ -23,7 +23,7 @@ spec:
         cloud.google.com/gke-nodepool: api
       containers:
         - name: hookd
-          image: us.gcr.io/videocoin-183500/hookd:latest
+          image: us.gcr.io/videocoin-183500/hookd-testing:latest
           imagePullPolicy: Always
           resources:
           env:

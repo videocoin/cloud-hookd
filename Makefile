@@ -7,7 +7,7 @@ CIRCLE_ARTIFACTS = ./bin
 PROTOS_PATH = ./
 GRPC_CPP_PLUGIN = grpc_cpp_plugin
 GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
-SERVICE_NAME = hookd
+SERVICE_NAME = hookd-testing
 PROJECT_ID?=
 
 VERSION=$$(git rev-parse --short HEAD)
@@ -23,9 +23,10 @@ version:
 
 image-tag:
 	@echo $(IMAGE_TAG)
+
 deps:
-	@echo "==> Running go mod..."
 	env GO111MODULE=on go mod vendor
+
 build:
 	export GOOS=linux
 	export GOARCH=amd64
@@ -42,7 +43,7 @@ test-coverage:
 	@echo "==> Running tests..."
 	go test -cover ./...
 
-docker:
+docker: deps
 	@echo "==> Docker building..."
 	@docker build -t $(IMAGE_TAG) -t $(LATEST) . --squash
 
