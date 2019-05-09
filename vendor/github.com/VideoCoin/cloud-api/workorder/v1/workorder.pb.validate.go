@@ -74,6 +74,8 @@ func (m *WorkOrder) Validate() error {
 
 	// no validation rules for IngestStatus
 
+	// no validation rules for StreamHash
+
 	return nil
 }
 

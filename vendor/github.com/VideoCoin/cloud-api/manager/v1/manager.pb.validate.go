@@ -383,7 +383,7 @@ func (m *ContractAddrRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for StreamId
+	// no validation rules for PipelineId
 
 	// no validation rules for ContractAddress
 

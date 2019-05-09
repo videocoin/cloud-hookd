@@ -52,6 +52,7 @@ message WorkOrder {
     bytes worker = 15 [ (gogoproto.moretags) = "gorm:\"worker;type:binary(32);DEFAULT:NULL\"sql:\"type:binary(32);DEFAULT:null\"" ];
     bool refunded = 20;
     IngestStatus ingest_status = 21;
+    string stream_hash = 22;
 }
 
 message JobProfile {
