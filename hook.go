@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	manager_v1 "github.com/VideoCoin/cloud-api/manager/v1"
+	workorder_v1 "github.com/VideoCoin/cloud-api/workorder/v1"
 
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
@@ -75,33 +76,33 @@ func (h *Hook) handleHook(c echo.Context) error {
 func (h *Hook) handlePublish(r *http.Request) error {
 	h.log.Info("handling publish hook")
 
-	// streamInfo, err := ParseStreamName(r.FormValue("name"))
-	// if err != nil {
-	// 	h.log.Warnf("failed to parse stream name [ %+v ]: %s", streamInfo, err)
-	// 	return ErrBadRequest
-	// }
+	streamInfo, err := ParseStreamName(r.FormValue("name"))
+	if err != nil {
+		h.log.Warnf("failed to parse stream name [ %+v ]: %s", streamInfo, err)
+		return ErrBadRequest
+	}
 
-	// h.log = h.log.WithFields(logrus.Fields{
-	// 	"stream_hash": streamInfo.StreamHash,
-	// })
+	h.log = h.log.WithFields(logrus.Fields{
+		"stream_hash": streamInfo.StreamHash,
+	})
 
-	// h.log.Info("getting user profile")
+	h.log.Info("getting user profile")
 
-	// ctx := context.Background()
+	ctx := context.Background()
 
-	// h.log.Info("marking camera as on air")
+	h.log.Info("marking camera as on air")
 
-	// managerResp, err := h.manager.UpdateStreamStatus(ctx, &manager_v1.StreamStatusRequest{
-	// 	StreamId:     streamInfo.StreamID,
-	// 	Status:       workorder_v1.WorkOrderStatusPending.String(),
-	// 	IngestStatus: workorder_v1.IngestStatusActive,
-	// })
+	managerResp, err := h.manager.UpdateStreamStatus(ctx, &manager_v1.StreamStatusRequest{
+		StreamHash:   streamInfo.StreamHash,
+		Status:       workorder_v1.WorkOrderStatusPending.String(),
+		IngestStatus: workorder_v1.IngestStatusActive,
+	})
 
-	// if err != nil {
-	// 	h.log.Errorf("failed to update stream status: %s", err.Error())
-	// }
+	if err != nil {
+		h.log.Errorf("failed to update stream status: %s", err.Error())
+	}
 
-	// h.log.Debugf("manager response: %+v", managerResp)
+	h.log.Debugf("manager response: %+v", managerResp)
 
 	return nil
 }
