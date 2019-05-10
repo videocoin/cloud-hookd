@@ -3,7 +3,7 @@ module github.com/VideoCoin/hookd
 go 1.12
 
 require (
-	github.com/VideoCoin/cloud-api v0.0.0-20190509223904-dda4080fb8f7
+	github.com/VideoCoin/cloud-api v0.0.0-20190510204108-d599b1f24a18
 	github.com/envoyproxy/protoc-gen-validate v0.0.14 // indirect
 	github.com/gogo/protobuf v1.2.1 // indirect
 	github.com/golang/protobuf v1.3.1
