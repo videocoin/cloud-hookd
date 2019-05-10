@@ -43,9 +43,9 @@ service ManagerService {
     };
   };
 
-  rpc StopStream(StreamRequest) returns (google.protobuf.Empty) {
+  rpc StopStream(StopStreamRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/api/v1/stream/stop/{stream_id}"
+      post: "/api/v1/stream/stop/{stream_hash}"
       body: "*"
     };
   };
@@ -190,4 +190,7 @@ message UpdateJobRequest {
 
 message StreamRequest {
   int64 stream_id = 1;
+}
+message StopStreamRequest {
+  string stream_hash = 1;
 }
