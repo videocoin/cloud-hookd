@@ -679,7 +679,7 @@ func (m *StreamStatusRequest) Validate() error {
 
 	// no validation rules for TranscoderId
 
-	// no validation rules for StreamId
+	// no validation rules for StreamHash
 
 	// no validation rules for Status
 
