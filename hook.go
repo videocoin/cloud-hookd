@@ -1,6 +1,7 @@
 package hookd
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -118,7 +119,7 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 		"stream_hash": streamInfo.StreamHash,
 	})
 
-	//	ctx := context.Background()
+	ctx := context.Background()
 
 	h.log.Info("marking stream as offline")
 
