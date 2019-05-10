@@ -106,34 +106,33 @@ func (h *Hook) handlePublish(r *http.Request) error {
 }
 
 func (h *Hook) handlePublishDone(r *http.Request) error {
+	h.log.Info("handling publish done hook")
+
+	streamInfo, err := ParseStreamName(r.FormValue("name"))
+	if err != nil {
+		h.log.Warningf("failed to parse stream name: %s", err)
+		return ErrBadRequest
+	}
+
+	h.log = h.log.WithFields(logrus.Fields{
+		"stream_hash": streamInfo.StreamHash,
+	})
+
+	//	ctx := context.Background()
+
+	h.log.Info("marking stream as offline")
+
+	managerResp, err := h.manager.StopStream(ctx, &manager_v1.StopStreamRequest{
+		StreamHash: streamInfo.StreamHash,
+	})
+
+	if err != nil {
+		h.log.Errorf("failed to stop stream: %s", err.Error())
+	}
+
+	h.log.Debugf("manager response: %+v", managerResp)
+
 	return nil
-	// h.log.Info("handling publish done hook")
-
-	// streamInfo, err := ParseStreamName(r.FormValue("name"))
-	// if err != nil {
-	// 	h.log.Warningf("failed to parse stream name: %s", err)
-	// 	return ErrBadRequest
-	// }
-
-	// h.log = h.log.WithFields(logrus.Fields{
-	// 	"stream_hash": streamInfo.StreamHash,
-	// })
-
-	// ctx := context.Background()
-
-	// h.log.Info("marking stream as offline")
-
-	// // managerResp, err := h.manager.StopStream(ctx, &manager_v1.StreamRequest{
-	// // 	StreamId: streamInfo.StreamID,
-	// // })
-
-	// if err != nil {
-	// 	h.log.Errorf("failed to stop stream: %s", err.Error())
-	// }
-
-	// h.log.Debugf("manager response: %+v", managerResp)
-
-	// return nil
 
 }
 
