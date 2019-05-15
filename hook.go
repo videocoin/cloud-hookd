@@ -86,6 +86,8 @@ func (h *Hook) handlePublish(r *http.Request) error {
 		"stream_hash": streamInfo.StreamHash,
 	})
 
+	h.log.Infof("using stream hash: %s", streamInfo.StreamHash)
+
 	h.log.Info("getting user profile")
 
 	ctx := context.Background()
