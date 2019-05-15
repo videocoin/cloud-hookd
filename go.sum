@@ -1,12 +1,7 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/VideoCoin/cloud-api v0.0.0-20190509184445-b638ea4e3527 h1:oNDdJYlx7nnbBJC3Z41vCqCC5XwTfVVOwfLOlhgNPT4=
-github.com/VideoCoin/cloud-api v0.0.0-20190509223904-dda4080fb8f7 h1:+ntsxCsR1dvosxG5DIWTXTF4gM68KdA7GFS9rZhsIFc=
-github.com/VideoCoin/cloud-api v0.0.0-20190509223904-dda4080fb8f7/go.mod h1:BfO7vo1wOuXAFn5PdxKjgbvyAoa2ERilXVzMc04NB34=
-github.com/VideoCoin/cloud-api v0.0.0-20190510204108-d599b1f24a18 h1:/70PA4NnLCZ4M23QNJbObEeJFPRI9WynqxTV8lVECMk=
-github.com/VideoCoin/cloud-api v0.0.0-20190510204108-d599b1f24a18/go.mod h1:BfO7vo1wOuXAFn5PdxKjgbvyAoa2ERilXVzMc04NB34=
-github.com/VideoCoin/cloud-api v0.0.0-20190510235230-d6ce025c82f0 h1:2znlyK5esa3Fzy8hwrdq3xv5cezJJh7GRP3sXgRJb8A=
-github.com/VideoCoin/cloud-api v0.0.0-20190510235230-d6ce025c82f0/go.mod h1:BfO7vo1wOuXAFn5PdxKjgbvyAoa2ERilXVzMc04NB34=
+github.com/VideoCoin/cloud-api v0.0.0-20190513234221-13907b65a761 h1:4u6srPj/nGlhzCmEAtvUSyeRx9tHMrNgl6AqWxlN41E=
+github.com/VideoCoin/cloud-api v0.0.0-20190513234221-13907b65a761/go.mod h1:BfO7vo1wOuXAFn5PdxKjgbvyAoa2ERilXVzMc04NB34=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973 h1:xJ4a3vCFaGF/jqvzLMYoU8P317H5OQ+Via4RmuPwCS0=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=

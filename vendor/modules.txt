@@ -1,9 +1,9 @@
-# github.com/VideoCoin/cloud-api v0.0.0-20190510235230-d6ce025c82f0
+# github.com/VideoCoin/cloud-api v0.0.0-20190513234221-13907b65a761
 github.com/VideoCoin/cloud-api/manager/v1
+github.com/VideoCoin/cloud-api/workorder/v1
 github.com/VideoCoin/cloud-api/profiles/v1
 github.com/VideoCoin/cloud-api/rpc
 github.com/VideoCoin/cloud-api/transcoder/v1
-github.com/VideoCoin/cloud-api/workorder/v1
 # github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
 github.com/beorn7/perks/quantile
 # github.com/envoyproxy/protoc-gen-validate v0.0.14
