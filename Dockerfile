@@ -14,7 +14,7 @@ RUN make build
 FROM ubuntu:latest AS release
 
 
-COPY --from=builder /go/src/github.com/VideoCoin/hookd/bin/hookd-testing ./
+COPY --from=builder /go/src/github.com/VideoCoin/hookd/bin/hookd ./
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
-ENTRYPOINT [ "./hookd-testing" ]
+ENTRYPOINT [ "./hookd" ]

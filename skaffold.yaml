@@ -8,7 +8,7 @@ deploy:
     - skaffold/k8s-*
 build:
     artifacts:
-    - image: us.gcr.io/videocoin-183500/hookd-testing
+    - image: us.gcr.io/videocoin-183500/hookd
     # Use local Docker daemon to build artifacts
     local:
         push: true
