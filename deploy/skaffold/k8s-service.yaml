@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: manager
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 35.233.184.221 
+  selector:
+    app: manager
+  ports:
+  - name: grpc
+    protocol: TCP
+    port: 50051
+    targetPort: 50051
+  - name: proxy
+    protocol: TCP
+    port: 50053
+    targetPort: 50053
