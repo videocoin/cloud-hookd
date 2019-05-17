@@ -3,10 +3,6 @@ image:
   tag: testing
   pullPolicy: Always
 
-proxyImage:
-  repo: gcr.io/cloudsql-docker/gce-proxy
-  tag: latest
-
 config:
   maxReplicas: 2
   minReplicas: 1
@@ -27,5 +23,3 @@ resources:
 
 deployment:
   nodePool: api
-  proxyName: cloudsql-proxy
-
