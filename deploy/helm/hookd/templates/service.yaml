@@ -10,13 +10,9 @@ spec:
   type: {{ .Values.service.type }}
   loadBalancerIP: {{ .Values.service.ip }}
   ports:
-  - name: grpc
+  - name: external
     protocol: TCP
-    port: {{ .Values.service.grpcPort }}
-    targetPort: {{ .Values.service.grpcPort }}
-  - name: proxy
-    protocol: TCP
-    port: {{ .Values.service.proxyPort }}
-    targetPort: {{ .Values.service.proxyPort }}
+    port: {{ .Values.service.externalPort }}
+    targetPort: {{ .Values.service.externalPort }}
   selector:
     app: {{ .Chart.Name }}
