@@ -10,13 +10,13 @@ spec:
   type: {{ .Values.service.type }}
   loadBalancerIP: {{ .Values.service.ip }}
   ports:
-  - name: ingest
+  - name: grpc
     protocol: TCP
-    port: {{ .Values.service.ingestPort }}
-    targetPort: {{ .Values.service.ingestPort }}
-  - name: rtmp
+    port: {{ .Values.service.grpcPort }}
+    targetPort: {{ .Values.service.grpcPort }}
+  - name: proxy
     protocol: TCP
-    port: {{ .Values.service.rtmpPort }}
-    targetPort: {{ .Values.service.rtmpPort }}
+    port: {{ .Values.service.proxyPort }}
+    targetPort: {{ .Values.service.proxyPort }}
   selector:
     app: {{ .Chart.Name }}

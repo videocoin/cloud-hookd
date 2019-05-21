@@ -30,6 +30,11 @@ spec:
           imagePullPolicy: Always
           image: "{{ .Values.image.repo }}:{{ .Values.image.tag }}"
           env:
+            - name: MANAGER_RPC_ADDR
+              valueFrom:
+                configMapKeyRef:
+                  key: managerRpcAddr
+                  name: {{ .Chart.Name }}
             - name: ADDR
-              value: 0.0.0.0:8888
+              value: 0.0.0.0:{{ .Values.service.externalPort }}
           resources: {}
