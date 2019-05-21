@@ -4,17 +4,12 @@
 
 DOCKER_REGISTRY = us.gcr.io
 CIRCLE_ARTIFACTS = ./bin
-PROTOS_PATH = ./
-GRPC_CPP_PLUGIN = grpc_cpp_plugin
-GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
 SERVICE_NAME = hookd
-PROJECT_ID?=
 
+PROJECT_ID=$$(gcloud config list --format 'value(core.project)' 2>/dev/null)
 VERSION=$$(git rev-parse --short HEAD)
 IMAGE_TAG=$(DOCKER_REGISTRY)/${PROJECT_ID}/$(SERVICE_NAME):$(VERSION)
-LATEST=$(DOCKER_REGISTRY)/${PROJECT_ID}/$(SERVICE_NAME):testing
-
-IMAGE_TARBALL_PATH=$(CIRCLE_ARTIFACTS)/$(SERVICE_NAME)-$(VERSION).tar
+LATEST=$(DOCKER_REGISTRY)/${PROJECT_ID}/$(SERVICE_NAME):latest
 
 main: build docker push
 
