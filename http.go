@@ -4,9 +4,9 @@ import (
 	"context"
 
 	manager_v1 "github.com/VideoCoin/cloud-api/manager/v1"
+	"github.com/gogo/protobuf/types"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -49,7 +49,7 @@ func NewHTTPServer(cfg *HTTPServerConfig, log *logrus.Entry) (*HTTPServer, error
 		return c.JSON(200, map[string]string{"status": "OK"})
 	})
 
-	status, err := manager.Health(context.Background(), &empty.Empty{})
+	status, err := manager.Health(context.Background(), &types.Empty{})
 	if status.GetStatus() != "healthy" || err != nil {
 		panic(err)
 	}

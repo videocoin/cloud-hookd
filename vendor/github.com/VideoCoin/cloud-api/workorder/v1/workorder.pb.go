@@ -7,12 +7,15 @@ import (
 	fmt "fmt"
 	v1 "github.com/VideoCoin/cloud-api/profiles/v1"
 	_ "github.com/gogo/protobuf/gogoproto"
-	proto "github.com/golang/protobuf/proto"
+	proto "github.com/gogo/protobuf/proto"
+	golang_proto "github.com/golang/protobuf/proto"
+	io "io"
 	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+var _ = golang_proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
@@ -20,7 +23,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 type WorkOrderStatus int32
 
@@ -97,27 +100,27 @@ func (IngestStatus) EnumDescriptor() ([]byte, []int) {
 }
 
 type WorkOrder struct {
-	Id                   uint32       `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	PipelineId           string       `protobuf:"bytes,2,opt,name=pipeline_id,json=pipelineId,proto3" json:"pipeline_id,omitempty"`
-	TranscoderId         string       `protobuf:"bytes,3,opt,name=transcoder_id,json=transcoderId,proto3" json:"transcoder_id,omitempty"`
-	ProfileId            v1.ProfileId `protobuf:"varint,4,opt,name=profile_id,json=profileId,proto3,enum=cloud.api.profiles.v1.ProfileId" json:"profile_id,omitempty"`
-	ClientAddress        string       `protobuf:"bytes,5,opt,name=client_address,json=clientAddress,proto3" json:"client_address,omitempty"`
-	StreamAddress        string       `protobuf:"bytes,6,opt,name=stream_address,json=streamAddress,proto3" json:"stream_address,omitempty"`
-	StreamId             int64        `protobuf:"varint,7,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	TranscodeInputUrl    string       `protobuf:"bytes,8,opt,name=transcode_input_url,json=transcodeInputUrl,proto3" json:"transcode_input_url,omitempty"`
-	IngestInputUrl       string       `protobuf:"bytes,9,opt,name=ingest_input_url,json=ingestInputUrl,proto3" json:"ingest_input_url,omitempty"`
-	TranscodeOutputUrl   string       `protobuf:"bytes,10,opt,name=transcode_output_url,json=transcodeOutputUrl,proto3" json:"transcode_output_url,omitempty"`
-	Status               string       `protobuf:"bytes,11,opt,name=status,proto3" json:"status,omitempty"`
-	Chunks               []byte       `protobuf:"bytes,12,opt,name=chunks,proto3" json:"chunks,omitempty" gorm:"chunks;type:json"sql:"type:json"`
-	CreatedAt            int64        `protobuf:"varint,13,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt            int64        `protobuf:"varint,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	Worker               []byte       `protobuf:"bytes,15,opt,name=worker,proto3" json:"worker,omitempty" gorm:"worker;type:binary(32);DEFAULT:NULL"sql:"type:binary(32);DEFAULT:null"`
-	Refunded             bool         `protobuf:"varint,20,opt,name=refunded,proto3" json:"refunded,omitempty"`
-	IngestStatus         IngestStatus `protobuf:"varint,21,opt,name=ingest_status,json=ingestStatus,proto3,enum=cloud.api.workorder.v1.IngestStatus" json:"ingest_status,omitempty"`
-	StreamHash           string       `protobuf:"bytes,22,opt,name=stream_hash,json=streamHash,proto3" json:"stream_hash,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	Id                   uint32          `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	PipelineId           string          `protobuf:"bytes,2,opt,name=pipeline_id,json=pipelineId,proto3" json:"pipeline_id,omitempty"`
+	TranscoderId         string          `protobuf:"bytes,3,opt,name=transcoder_id,json=transcoderId,proto3" json:"transcoder_id,omitempty"`
+	ProfileId            v1.ProfileId    `protobuf:"varint,4,opt,name=profile_id,json=profileId,proto3,enum=cloud.api.profiles.v1.ProfileId" json:"profile_id,omitempty"`
+	ClientAddress        string          `protobuf:"bytes,5,opt,name=client_address,json=clientAddress,proto3" json:"client_address,omitempty"`
+	StreamAddress        string          `protobuf:"bytes,6,opt,name=stream_address,json=streamAddress,proto3" json:"stream_address,omitempty"`
+	StreamId             int64           `protobuf:"varint,7,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	TranscodeInputUrl    string          `protobuf:"bytes,8,opt,name=transcode_input_url,json=transcodeInputUrl,proto3" json:"transcode_input_url,omitempty"`
+	IngestInputUrl       string          `protobuf:"bytes,9,opt,name=ingest_input_url,json=ingestInputUrl,proto3" json:"ingest_input_url,omitempty"`
+	TranscodeOutputUrl   string          `protobuf:"bytes,10,opt,name=transcode_output_url,json=transcodeOutputUrl,proto3" json:"transcode_output_url,omitempty"`
+	Status               WorkOrderStatus `protobuf:"varint,11,opt,name=status,proto3,enum=cloud.api.workorder.v1.WorkOrderStatus" json:"status,omitempty"`
+	Chunks               []byte          `protobuf:"bytes,12,opt,name=chunks,proto3" json:"chunks,omitempty" gorm:"chunks;type:json"sql:"type:json"`
+	CreatedAt            int64           `protobuf:"varint,13,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt            int64           `protobuf:"varint,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Worker               []byte          `protobuf:"bytes,15,opt,name=worker,proto3" json:"worker,omitempty" gorm:"worker;type:binary(32);DEFAULT:NULL"sql:"type:binary(32);DEFAULT:null"`
+	Refunded             bool            `protobuf:"varint,20,opt,name=refunded,proto3" json:"refunded,omitempty"`
+	IngestStatus         IngestStatus    `protobuf:"varint,21,opt,name=ingest_status,json=ingestStatus,proto3,enum=cloud.api.workorder.v1.IngestStatus" json:"ingest_status,omitempty"`
+	StreamHash           string          `protobuf:"bytes,22,opt,name=stream_hash,json=streamHash,proto3" json:"stream_hash,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *WorkOrder) Reset()         { *m = WorkOrder{} }
@@ -127,16 +130,25 @@ func (*WorkOrder) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7ef37cf3188837f0, []int{0}
 }
 func (m *WorkOrder) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_WorkOrder.Unmarshal(m, b)
+	return m.Unmarshal(b)
 }
 func (m *WorkOrder) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_WorkOrder.Marshal(b, m, deterministic)
+	if deterministic {
+		return xxx_messageInfo_WorkOrder.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
 }
 func (m *WorkOrder) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_WorkOrder.Merge(m, src)
 }
 func (m *WorkOrder) XXX_Size() int {
-	return xxx_messageInfo_WorkOrder.Size(m)
+	return m.Size()
 }
 func (m *WorkOrder) XXX_DiscardUnknown() {
 	xxx_messageInfo_WorkOrder.DiscardUnknown(m)
@@ -214,11 +226,11 @@ func (m *WorkOrder) GetTranscodeOutputUrl() string {
 	return ""
 }
 
-func (m *WorkOrder) GetStatus() string {
+func (m *WorkOrder) GetStatus() WorkOrderStatus {
 	if m != nil {
 		return m.Status
 	}
-	return ""
+	return WorkOrderStatusNone
 }
 
 func (m *WorkOrder) GetChunks() []byte {
@@ -270,20 +282,24 @@ func (m *WorkOrder) GetStreamHash() string {
 	return ""
 }
 
+func (*WorkOrder) XXX_MessageName() string {
+	return "cloud.api.workorder.v1.WorkOrder"
+}
+
 type JobProfile struct {
-	Id                   uint32       `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	PipelineId           string       `protobuf:"bytes,2,opt,name=pipeline_id,json=pipelineId,proto3" json:"pipeline_id,omitempty"`
-	ProfileId            v1.ProfileId `protobuf:"varint,3,opt,name=profile_id,json=profileId,proto3,enum=cloud.api.profiles.v1.ProfileId" json:"profile_id,omitempty"`
-	IngestInputUrl       string       `protobuf:"bytes,4,opt,name=ingest_input_url,json=ingestInputUrl,proto3" json:"ingest_input_url,omitempty"`
-	TranscodeOutputUrl   string       `protobuf:"bytes,5,opt,name=transcode_output_url,json=transcodeOutputUrl,proto3" json:"transcode_output_url,omitempty"`
-	ClientAddress        string       `protobuf:"bytes,6,opt,name=client_address,json=clientAddress,proto3" json:"client_address,omitempty"`
-	StreamId             int64        `protobuf:"varint,7,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
-	StreamAddress        string       `protobuf:"bytes,8,opt,name=stream_address,json=streamAddress,proto3" json:"stream_address,omitempty"`
-	Status               string       `protobuf:"bytes,9,opt,name=status,proto3" json:"status,omitempty"`
-	IngestStatus         IngestStatus `protobuf:"varint,10,opt,name=ingest_status,json=ingestStatus,proto3,enum=cloud.api.workorder.v1.IngestStatus" json:"ingest_status,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	Id                   uint32          `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	PipelineId           string          `protobuf:"bytes,2,opt,name=pipeline_id,json=pipelineId,proto3" json:"pipeline_id,omitempty"`
+	ProfileId            v1.ProfileId    `protobuf:"varint,3,opt,name=profile_id,json=profileId,proto3,enum=cloud.api.profiles.v1.ProfileId" json:"profile_id,omitempty"`
+	IngestInputUrl       string          `protobuf:"bytes,4,opt,name=ingest_input_url,json=ingestInputUrl,proto3" json:"ingest_input_url,omitempty"`
+	TranscodeOutputUrl   string          `protobuf:"bytes,5,opt,name=transcode_output_url,json=transcodeOutputUrl,proto3" json:"transcode_output_url,omitempty"`
+	ClientAddress        string          `protobuf:"bytes,6,opt,name=client_address,json=clientAddress,proto3" json:"client_address,omitempty"`
+	StreamId             int64           `protobuf:"varint,7,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	StreamAddress        string          `protobuf:"bytes,8,opt,name=stream_address,json=streamAddress,proto3" json:"stream_address,omitempty"`
+	Status               WorkOrderStatus `protobuf:"varint,9,opt,name=status,proto3,enum=cloud.api.workorder.v1.WorkOrderStatus" json:"status,omitempty"`
+	IngestStatus         IngestStatus    `protobuf:"varint,10,opt,name=ingest_status,json=ingestStatus,proto3,enum=cloud.api.workorder.v1.IngestStatus" json:"ingest_status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *JobProfile) Reset()         { *m = JobProfile{} }
@@ -293,16 +309,25 @@ func (*JobProfile) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7ef37cf3188837f0, []int{1}
 }
 func (m *JobProfile) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_JobProfile.Unmarshal(m, b)
+	return m.Unmarshal(b)
 }
 func (m *JobProfile) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_JobProfile.Marshal(b, m, deterministic)
+	if deterministic {
+		return xxx_messageInfo_JobProfile.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
 }
 func (m *JobProfile) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_JobProfile.Merge(m, src)
 }
 func (m *JobProfile) XXX_Size() int {
-	return xxx_messageInfo_JobProfile.Size(m)
+	return m.Size()
 }
 func (m *JobProfile) XXX_DiscardUnknown() {
 	xxx_messageInfo_JobProfile.DiscardUnknown(m)
@@ -366,11 +391,11 @@ func (m *JobProfile) GetStreamAddress() string {
 	return ""
 }
 
-func (m *JobProfile) GetStatus() string {
+func (m *JobProfile) GetStatus() WorkOrderStatus {
 	if m != nil {
 		return m.Status
 	}
-	return ""
+	return WorkOrderStatusNone
 }
 
 func (m *JobProfile) GetIngestStatus() IngestStatus {
@@ -378,6 +403,10 @@ func (m *JobProfile) GetIngestStatus() IngestStatus {
 		return m.IngestStatus
 	}
 	return IngestStatusNone
+}
+
+func (*JobProfile) XXX_MessageName() string {
+	return "cloud.api.workorder.v1.JobProfile"
 }
 
 type JobProfiles struct {
@@ -394,16 +423,25 @@ func (*JobProfiles) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7ef37cf3188837f0, []int{2}
 }
 func (m *JobProfiles) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_JobProfiles.Unmarshal(m, b)
+	return m.Unmarshal(b)
 }
 func (m *JobProfiles) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_JobProfiles.Marshal(b, m, deterministic)
+	if deterministic {
+		return xxx_messageInfo_JobProfiles.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
 }
 func (m *JobProfiles) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_JobProfiles.Merge(m, src)
 }
 func (m *JobProfiles) XXX_Size() int {
-	return xxx_messageInfo_JobProfiles.Size(m)
+	return m.Size()
 }
 func (m *JobProfiles) XXX_DiscardUnknown() {
 	xxx_messageInfo_JobProfiles.DiscardUnknown(m)
@@ -418,75 +456,1467 @@ func (m *JobProfiles) GetJobProfiles() []*JobProfile {
 	return nil
 }
 
+func (*JobProfiles) XXX_MessageName() string {
+	return "cloud.api.workorder.v1.JobProfiles"
+}
 func init() {
 	proto.RegisterEnum("cloud.api.workorder.v1.WorkOrderStatus", WorkOrderStatus_name, WorkOrderStatus_value)
+	golang_proto.RegisterEnum("cloud.api.workorder.v1.WorkOrderStatus", WorkOrderStatus_name, WorkOrderStatus_value)
 	proto.RegisterEnum("cloud.api.workorder.v1.IngestStatus", IngestStatus_name, IngestStatus_value)
+	golang_proto.RegisterEnum("cloud.api.workorder.v1.IngestStatus", IngestStatus_name, IngestStatus_value)
 	proto.RegisterType((*WorkOrder)(nil), "cloud.api.workorder.v1.WorkOrder")
+	golang_proto.RegisterType((*WorkOrder)(nil), "cloud.api.workorder.v1.WorkOrder")
 	proto.RegisterType((*JobProfile)(nil), "cloud.api.workorder.v1.JobProfile")
+	golang_proto.RegisterType((*JobProfile)(nil), "cloud.api.workorder.v1.JobProfile")
 	proto.RegisterType((*JobProfiles)(nil), "cloud.api.workorder.v1.JobProfiles")
+	golang_proto.RegisterType((*JobProfiles)(nil), "cloud.api.workorder.v1.JobProfiles")
 }
 
 func init() { proto.RegisterFile("workorder/v1/workorder.proto", fileDescriptor_7ef37cf3188837f0) }
+func init() {
+	golang_proto.RegisterFile("workorder/v1/workorder.proto", fileDescriptor_7ef37cf3188837f0)
+}
 
 var fileDescriptor_7ef37cf3188837f0 = []byte{
-	// 940 bytes of a gzipped FileDescriptorProto
+	// 948 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x95, 0xcd, 0x6e, 0xdb, 0x46,
-	0x10, 0xc7, 0x45, 0xc9, 0x96, 0xa5, 0xb1, 0xa4, 0x30, 0x1b, 0x59, 0x66, 0x98, 0x46, 0x66, 0x95,
-	0x7e, 0x30, 0x46, 0x2d, 0xc5, 0x4e, 0x2f, 0x75, 0x0e, 0x85, 0x9c, 0x3a, 0xa8, 0x0a, 0x23, 0x31,
-	0xd8, 0xb8, 0x05, 0x7a, 0x11, 0x28, 0xee, 0x5a, 0x5a, 0x9b, 0xde, 0x65, 0x97, 0xa4, 0x0c, 0xbf,
-	0x41, 0xa1, 0x27, 0xe8, 0x45, 0xa7, 0xb6, 0x40, 0x9f, 0xa1, 0x4f, 0xd0, 0x63, 0x9f, 0x20, 0x28,
-	0xdc, 0x43, 0x81, 0x1e, 0xf3, 0x04, 0x05, 0x97, 0x14, 0xf5, 0x61, 0xa5, 0x80, 0x7b, 0xe3, 0xce,
-	0xff, 0x37, 0xc3, 0xe1, 0xec, 0x7f, 0x24, 0x78, 0xef, 0x92, 0x8b, 0x73, 0x2e, 0x30, 0x11, 0xad,
-	0xe1, 0x6e, 0x2b, 0x3d, 0x34, 0x3d, 0xc1, 0x03, 0x8e, 0x6a, 0x8e, 0xcb, 0x43, 0xdc, 0xb4, 0x3d,
-	0xda, 0x9c, 0x4a, 0xc3, 0x5d, 0x7d, 0xa7, 0x4f, 0x83, 0x41, 0xd8, 0x6b, 0x3a, 0xfc, 0xa2, 0xd5,
-	0xe7, 0x7d, 0xde, 0x92, 0x78, 0x2f, 0x3c, 0x95, 0x27, 0x79, 0x90, 0x4f, 0x71, 0x19, 0xfd, 0xb3,
-	0x19, 0xfc, 0x1b, 0x8a, 0x09, 0x7f, 0xce, 0x29, 0x6b, 0xc9, 0xda, 0x3b, 0xb6, 0x47, 0xa3, 0xec,
-	0x53, 0xea, 0x12, 0x3f, 0x6a, 0x61, 0xf2, 0x1c, 0xa7, 0x36, 0x7e, 0xc9, 0x43, 0xf1, 0x5b, 0x2e,
-	0xce, 0x5f, 0x45, 0xaf, 0x46, 0x15, 0xc8, 0x52, 0xac, 0x29, 0x86, 0x62, 0x96, 0xad, 0x2c, 0xc5,
-	0x68, 0x0b, 0xd6, 0x3d, 0xea, 0x11, 0x97, 0x32, 0xd2, 0xa5, 0x58, 0xcb, 0x1a, 0x8a, 0x59, 0xb4,
-	0x60, 0x12, 0xea, 0x60, 0xf4, 0x08, 0xca, 0x81, 0xb0, 0x99, 0xef, 0x70, 0x4c, 0x44, 0x84, 0xe4,
-	0x24, 0x52, 0x9a, 0x06, 0x3b, 0x18, 0x7d, 0x0e, 0x90, 0xbc, 0x35, 0x22, 0x56, 0x0c, 0xc5, 0xac,
-	0xec, 0x19, 0xcd, 0xe9, 0xa7, 0xa7, 0x2d, 0x0d, 0x77, 0x9b, 0xc7, 0xf1, 0x73, 0x07, 0x5b, 0x45,
-	0x6f, 0xf2, 0x88, 0x3e, 0x84, 0x8a, 0xe3, 0x52, 0xc2, 0x82, 0xae, 0x8d, 0xb1, 0x20, 0xbe, 0xaf,
-	0xad, 0xca, 0xd7, 0x94, 0xe3, 0x68, 0x3b, 0x0e, 0x46, 0x98, 0x1f, 0x08, 0x62, 0x5f, 0xa4, 0x58,
-	0x3e, 0xc6, 0xe2, 0xe8, 0x04, 0x7b, 0x00, 0xc5, 0x04, 0xa3, 0x58, 0x5b, 0x33, 0x14, 0x33, 0x67,
-	0x15, 0xe2, 0x40, 0x07, 0xa3, 0x26, 0xdc, 0x4b, 0x7b, 0xef, 0x52, 0xe6, 0x85, 0x41, 0x37, 0x14,
-	0xae, 0x56, 0x90, 0x85, 0xee, 0xa6, 0x52, 0x27, 0x52, 0x4e, 0x84, 0x8b, 0x4c, 0x50, 0x29, 0xeb,
-	0x13, 0x3f, 0x98, 0x81, 0x8b, 0x12, 0xae, 0xc4, 0xf1, 0x94, 0x7c, 0x02, 0xd5, 0x69, 0x65, 0x1e,
-	0x06, 0x13, 0x1a, 0x24, 0x8d, 0x52, 0xed, 0x95, 0x94, 0xa2, 0x8c, 0x1a, 0xe4, 0xfd, 0xc0, 0x0e,
-	0x42, 0x5f, 0x5b, 0x97, 0x4c, 0x72, 0x42, 0x07, 0x90, 0x77, 0x06, 0x21, 0x3b, 0xf7, 0xb5, 0x92,
-	0xa1, 0x98, 0xa5, 0x83, 0xed, 0xb7, 0x6f, 0xb6, 0x3e, 0xea, 0x73, 0x71, 0xb1, 0xdf, 0x88, 0xe3,
-	0xcf, 0x82, 0x2b, 0x8f, 0xec, 0x9f, 0xf9, 0x9c, 0x35, 0xfc, 0xef, 0xdd, 0xfd, 0xc6, 0xf4, 0x68,
-	0x25, 0x99, 0xe8, 0x21, 0x80, 0x23, 0x88, 0x1d, 0x10, 0xdc, 0xb5, 0x03, 0xad, 0x2c, 0xa7, 0x50,
-	0x4c, 0x22, 0xed, 0x20, 0x92, 0x43, 0x0f, 0x4f, 0xe4, 0x4a, 0x2c, 0x27, 0x91, 0x76, 0x80, 0x06,
-	0x90, 0x8f, 0xfc, 0x4a, 0x84, 0x76, 0x47, 0x76, 0x70, 0xfc, 0xf6, 0xcd, 0xd6, 0x51, 0xdc, 0x41,
-	0x1c, 0x8f, 0x3b, 0xe8, 0x51, 0x66, 0x8b, 0x2b, 0xf3, 0xe9, 0xde, 0xe3, 0x67, 0x5f, 0x1c, 0xbe,
-	0x68, 0x9f, 0x1c, 0xbd, 0xde, 0x7f, 0x79, 0x72, 0x74, 0x34, 0xd3, 0xd4, 0x12, 0x82, 0x85, 0xae,
-	0xdb, 0xb0, 0x92, 0xfa, 0x48, 0x87, 0x82, 0x20, 0xa7, 0x21, 0xc3, 0x04, 0x6b, 0x55, 0x43, 0x31,
-	0x0b, 0x56, 0x7a, 0x46, 0x1d, 0x28, 0x27, 0xb3, 0x4f, 0xc6, 0xb4, 0x21, 0xad, 0xf5, 0x41, 0x73,
-	0xf9, 0x56, 0x35, 0x3b, 0x12, 0xfe, 0x5a, 0xb2, 0x56, 0x89, 0xce, 0x9c, 0x22, 0xa3, 0x27, 0x9e,
-	0x18, 0xd8, 0xfe, 0x40, 0xab, 0xc5, 0x46, 0x8f, 0x43, 0x5f, 0xda, 0xfe, 0xa0, 0xf1, 0x6b, 0x0e,
-	0xe0, 0x2b, 0xde, 0x4b, 0xec, 0x79, 0xfb, 0x45, 0x99, 0xdf, 0x81, 0xdc, 0xed, 0x77, 0x60, 0x99,
-	0xd1, 0x56, 0x6e, 0x65, 0xb4, 0xd5, 0x77, 0x1a, 0xed, 0xe6, 0x7e, 0xe5, 0x97, 0xed, 0xd7, 0x7f,
-	0x2e, 0xce, 0xcd, 0xe5, 0x2b, 0x2c, 0x5b, 0xbe, 0xa9, 0xa7, 0x8b, 0x73, 0x9e, 0xbe, 0x71, 0x97,
-	0xf0, 0x7f, 0xef, 0xb2, 0xf1, 0x1a, 0xd6, 0xa7, 0x37, 0xe5, 0xa3, 0x43, 0x28, 0x9d, 0xf1, 0x5e,
-	0x77, 0x32, 0x60, 0x4d, 0x31, 0x72, 0xe6, 0xfa, 0x5e, 0xe3, 0x5d, 0x85, 0xa7, 0xa9, 0xd6, 0xfa,
-	0xd9, 0xb4, 0xcc, 0xf6, 0xdf, 0x59, 0xb8, 0x93, 0xfe, 0x50, 0x26, 0xae, 0x79, 0x1f, 0x56, 0x18,
-	0x67, 0x44, 0xcd, 0xe8, 0x9b, 0xa3, 0xb1, 0x71, 0x6f, 0x41, 0x7e, 0xc9, 0x19, 0x41, 0x5b, 0x90,
-	0x63, 0xe4, 0x52, 0x55, 0xf4, 0xda, 0x68, 0x6c, 0xa0, 0x45, 0x82, 0x5c, 0xa2, 0x8f, 0x61, 0xcd,
-	0x23, 0x0c, 0x53, 0xd6, 0x57, 0xb3, 0xba, 0x3e, 0x1a, 0x1b, 0xb5, 0x05, 0xe8, 0x38, 0x56, 0xd1,
-	0x8e, 0x74, 0x90, 0x43, 0x7c, 0x3f, 0x62, 0x73, 0xfa, 0xc3, 0xd1, 0xd8, 0xb8, 0xbf, 0xc8, 0xa6,
-	0x00, 0x7a, 0x04, 0xab, 0x82, 0xd8, 0xf8, 0x4a, 0x5d, 0xd1, 0xb5, 0xd1, 0xd8, 0xa8, 0x2e, 0x90,
-	0x56, 0xa4, 0xa1, 0xc7, 0x50, 0x70, 0xf8, 0x85, 0xe7, 0x92, 0x80, 0xa8, 0xab, 0xfa, 0x83, 0xd1,
-	0xd8, 0xd8, 0x5c, 0xe0, 0x9e, 0x27, 0x32, 0x32, 0x61, 0xcd, 0xb1, 0x99, 0x43, 0x5c, 0xac, 0xe6,
-	0x97, 0x93, 0x52, 0x25, 0x91, 0x13, 0xf2, 0xa7, 0x36, 0x75, 0x09, 0x56, 0xd7, 0xf4, 0xfb, 0xa3,
-	0xb1, 0xb1, 0xb1, 0x00, 0xbe, 0x90, 0xa2, 0xbe, 0xf9, 0xc3, 0x4f, 0xf5, 0xcc, 0x6f, 0x3f, 0xd7,
-	0x17, 0xa7, 0xba, 0xfd, 0x8f, 0x02, 0xa5, 0xd9, 0xeb, 0x45, 0x9f, 0x00, 0x9a, 0xf3, 0x46, 0x37,
-	0x19, 0x7a, 0x75, 0x34, 0x36, 0xd4, 0x59, 0x52, 0x4e, 0xfc, 0x09, 0x54, 0xe7, 0x69, 0xdb, 0x09,
-	0xe8, 0x90, 0x4c, 0xae, 0x60, 0x96, 0x6f, 0x4b, 0x05, 0x7d, 0x0a, 0xb5, 0xf9, 0x0c, 0xca, 0x92,
-	0x9c, 0x6c, 0x3c, 0xbb, 0xd9, 0x9c, 0x4e, 0xa2, 0x45, 0xff, 0x14, 0xf3, 0x59, 0x44, 0x08, 0x2e,
-	0xd4, 0x9c, 0xbe, 0x31, 0x1a, 0x1b, 0x77, 0x67, 0x53, 0x0e, 0x23, 0x41, 0xaf, 0x26, 0xdf, 0x3b,
-	0xf7, 0x6d, 0x07, 0xd5, 0xdf, 0xaf, 0xeb, 0x99, 0x3f, 0xae, 0xeb, 0x99, 0x3f, 0xaf, 0xeb, 0x99,
-	0x1f, 0xff, 0xaa, 0x67, 0xbe, 0xcb, 0x0e, 0x77, 0x7b, 0x79, 0xf9, 0xe7, 0xfc, 0xf4, 0xdf, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0xc2, 0x40, 0x8f, 0x86, 0x3e, 0x08, 0x00, 0x00,
+	0x10, 0xc7, 0x43, 0xc9, 0x96, 0xa5, 0xd1, 0x47, 0x98, 0x8d, 0x2c, 0x33, 0x4c, 0x23, 0xb3, 0x4a,
+	0xdb, 0x30, 0x46, 0x2d, 0xc5, 0x4e, 0x2f, 0x75, 0x0e, 0x81, 0x9c, 0x3a, 0xa8, 0x0a, 0x23, 0x31,
+	0xd4, 0xb8, 0x05, 0x7a, 0x11, 0x28, 0xee, 0x5a, 0x5a, 0x9b, 0xde, 0x65, 0x97, 0xa4, 0x0c, 0xbf,
+	0x41, 0xa1, 0x77, 0xd0, 0xa9, 0x7d, 0x8a, 0x9e, 0x7a, 0xcc, 0xa9, 0x68, 0x5f, 0x20, 0x28, 0x9c,
+	0x43, 0x81, 0x1e, 0xf3, 0x04, 0x05, 0x97, 0x14, 0xf5, 0x61, 0x39, 0x80, 0x7d, 0xdb, 0x9d, 0xff,
+	0x6f, 0x86, 0xb3, 0xf3, 0x01, 0xc2, 0x27, 0x67, 0x5c, 0x9c, 0x70, 0x81, 0x89, 0x68, 0x0c, 0xb6,
+	0x1a, 0xc9, 0xa5, 0xee, 0x0a, 0xee, 0x73, 0x54, 0xb1, 0x1d, 0x1e, 0xe0, 0xba, 0xe5, 0xd2, 0xfa,
+	0x44, 0x1a, 0x6c, 0xe9, 0x9b, 0x3d, 0xea, 0xf7, 0x83, 0x6e, 0xdd, 0xe6, 0xa7, 0x8d, 0x1e, 0xef,
+	0xf1, 0x86, 0xc4, 0xbb, 0xc1, 0x91, 0xbc, 0xc9, 0x8b, 0x3c, 0x45, 0x61, 0xf4, 0xaf, 0xa7, 0xf0,
+	0x1f, 0x28, 0x26, 0xfc, 0x05, 0xa7, 0xac, 0x21, 0x63, 0x6f, 0x5a, 0x2e, 0x0d, 0xbd, 0x8f, 0xa8,
+	0x43, 0xbc, 0x30, 0x85, 0xf1, 0x39, 0x72, 0xad, 0xfd, 0x99, 0x81, 0xdc, 0x8f, 0x5c, 0x9c, 0xbc,
+	0x0e, 0x3f, 0x8d, 0x4a, 0x90, 0xa2, 0x58, 0x53, 0x0c, 0xc5, 0x2c, 0xb6, 0x53, 0x14, 0xa3, 0x75,
+	0xc8, 0xbb, 0xd4, 0x25, 0x0e, 0x65, 0xa4, 0x43, 0xb1, 0x96, 0x32, 0x14, 0x33, 0xd7, 0x86, 0xb1,
+	0xa9, 0x85, 0xd1, 0x43, 0x28, 0xfa, 0xc2, 0x62, 0x9e, 0xcd, 0x31, 0x11, 0x21, 0x92, 0x96, 0x48,
+	0x61, 0x62, 0x6c, 0x61, 0xf4, 0x1c, 0x20, 0xfe, 0x6a, 0x48, 0x2c, 0x19, 0x8a, 0x59, 0xda, 0x36,
+	0xea, 0x93, 0xa7, 0x27, 0x29, 0x0d, 0xb6, 0xea, 0x07, 0xd1, 0xb9, 0x85, 0xdb, 0x39, 0x77, 0x7c,
+	0x44, 0x9f, 0x43, 0xc9, 0x76, 0x28, 0x61, 0x7e, 0xc7, 0xc2, 0x58, 0x10, 0xcf, 0xd3, 0x96, 0xe5,
+	0x67, 0x8a, 0x91, 0xb5, 0x19, 0x19, 0x43, 0xcc, 0xf3, 0x05, 0xb1, 0x4e, 0x13, 0x2c, 0x13, 0x61,
+	0x91, 0x75, 0x8c, 0xdd, 0x87, 0x5c, 0x8c, 0x51, 0xac, 0xad, 0x18, 0x8a, 0x99, 0x6e, 0x67, 0x23,
+	0x43, 0x0b, 0xa3, 0x3a, 0xdc, 0x4d, 0x72, 0xef, 0x50, 0xe6, 0x06, 0x7e, 0x27, 0x10, 0x8e, 0x96,
+	0x95, 0x81, 0xee, 0x24, 0x52, 0x2b, 0x54, 0x0e, 0x85, 0x83, 0x4c, 0x50, 0x29, 0xeb, 0x11, 0xcf,
+	0x9f, 0x82, 0x73, 0x12, 0x2e, 0x45, 0xf6, 0x84, 0x7c, 0x02, 0xe5, 0x49, 0x64, 0x1e, 0xf8, 0x63,
+	0x1a, 0x24, 0x8d, 0x12, 0xed, 0xb5, 0x94, 0x42, 0x8f, 0xe7, 0x90, 0xf1, 0x7c, 0xcb, 0x0f, 0x3c,
+	0x2d, 0x2f, 0x6b, 0xf6, 0xa8, 0xbe, 0x78, 0x5c, 0xea, 0x49, 0x03, 0xbf, 0x97, 0x78, 0x3b, 0x76,
+	0x43, 0xbb, 0x90, 0xb1, 0xfb, 0x01, 0x3b, 0xf1, 0xb4, 0x82, 0xa1, 0x98, 0x85, 0xdd, 0x8d, 0x0f,
+	0xef, 0xd6, 0xbf, 0xe8, 0x71, 0x71, 0xba, 0x53, 0x8b, 0xec, 0xcf, 0xfc, 0x73, 0x97, 0xec, 0x1c,
+	0x7b, 0x9c, 0xd5, 0xbc, 0x9f, 0x9d, 0x9d, 0xda, 0xe4, 0xda, 0x8e, 0x3d, 0xd1, 0x03, 0x00, 0x5b,
+	0x10, 0xcb, 0x27, 0xb8, 0x63, 0xf9, 0x5a, 0x51, 0x96, 0x2b, 0x17, 0x5b, 0x9a, 0x7e, 0x28, 0x07,
+	0x2e, 0x1e, 0xcb, 0xa5, 0x48, 0x8e, 0x2d, 0x4d, 0x1f, 0xf5, 0x21, 0x13, 0x66, 0x4a, 0x84, 0x76,
+	0x5b, 0x66, 0x70, 0xf0, 0xe1, 0xdd, 0xfa, 0x7e, 0x94, 0x41, 0x64, 0x8f, 0x32, 0xe8, 0x52, 0x66,
+	0x89, 0x73, 0xf3, 0xe9, 0xf6, 0xe3, 0x67, 0xdf, 0xec, 0xbd, 0x6c, 0x1e, 0xee, 0xbf, 0xd9, 0x79,
+	0x75, 0xb8, 0xbf, 0x3f, 0x95, 0xd4, 0x02, 0x82, 0x05, 0x8e, 0x53, 0x6b, 0xc7, 0xf1, 0x91, 0x0e,
+	0x59, 0x41, 0x8e, 0x02, 0x86, 0x09, 0xd6, 0xca, 0x86, 0x62, 0x66, 0xdb, 0xc9, 0x1d, 0xb5, 0xa0,
+	0x18, 0x37, 0x29, 0xae, 0xe7, 0xaa, 0xac, 0xe7, 0x67, 0x57, 0xd5, 0xb3, 0x25, 0xe1, 0xb8, 0x98,
+	0x05, 0x3a, 0x75, 0x0b, 0x37, 0x22, 0x1e, 0x9e, 0xbe, 0xe5, 0xf5, 0xb5, 0x4a, 0xb4, 0x11, 0x91,
+	0xe9, 0x5b, 0xcb, 0xeb, 0xd7, 0xfe, 0x4e, 0x03, 0x7c, 0xc7, 0xbb, 0xf1, 0x1c, 0x5f, 0x7f, 0xa3,
+	0x66, 0x97, 0x25, 0x7d, 0xfd, 0x65, 0x59, 0x34, 0x91, 0x4b, 0xd7, 0x9a, 0xc8, 0xe5, 0x2b, 0x27,
+	0xf2, 0xf2, 0x22, 0x66, 0x16, 0x2d, 0xe2, 0x47, 0x37, 0xec, 0xf2, 0x96, 0x66, 0x17, 0x6d, 0xe9,
+	0x64, 0xf8, 0x73, 0x37, 0x1b, 0xfe, 0x4b, 0x4d, 0x87, 0x9b, 0x36, 0xbd, 0xf6, 0x06, 0xf2, 0x93,
+	0x96, 0x7a, 0x68, 0x0f, 0x0a, 0xc7, 0xbc, 0xdb, 0x19, 0x77, 0x42, 0x53, 0x8c, 0xb4, 0x99, 0xdf,
+	0xae, 0x5d, 0x15, 0x78, 0xe2, 0xda, 0xce, 0x1f, 0x4f, 0xc2, 0x6c, 0xfc, 0x9b, 0x82, 0xdb, 0x73,
+	0xc9, 0xa3, 0x4f, 0x61, 0x89, 0x71, 0x46, 0xd4, 0x5b, 0xfa, 0xda, 0x70, 0x64, 0xdc, 0x9d, 0x93,
+	0x5f, 0x71, 0x46, 0xd0, 0x3a, 0xa4, 0x19, 0x39, 0x53, 0x15, 0xbd, 0x32, 0x1c, 0x19, 0x68, 0x9e,
+	0x20, 0x67, 0xe8, 0x11, 0xac, 0xb8, 0x84, 0x61, 0xca, 0x7a, 0x6a, 0x4a, 0xd7, 0x87, 0x23, 0xa3,
+	0x32, 0x07, 0x1d, 0x44, 0x2a, 0xda, 0x94, 0xa3, 0x66, 0x13, 0xcf, 0x0b, 0xd9, 0xb4, 0xfe, 0x60,
+	0x38, 0x32, 0xee, 0xcd, 0xb3, 0x09, 0x80, 0x1e, 0xc2, 0xb2, 0x20, 0x16, 0x3e, 0x57, 0x97, 0x74,
+	0x6d, 0x38, 0x32, 0xca, 0xf3, 0x85, 0x0f, 0x35, 0xf4, 0x18, 0xb2, 0x36, 0x3f, 0x75, 0x1d, 0xe2,
+	0x13, 0x75, 0x59, 0xbf, 0x3f, 0x1c, 0x19, 0x6b, 0x73, 0xdc, 0x8b, 0x58, 0x46, 0x26, 0xac, 0xd8,
+	0x16, 0xb3, 0x89, 0x83, 0xd5, 0xcc, 0x62, 0x52, 0xaa, 0x24, 0x1c, 0x99, 0xcc, 0x91, 0x45, 0x1d,
+	0x82, 0xd5, 0x15, 0xfd, 0xde, 0x70, 0x64, 0xac, 0xce, 0x81, 0x2f, 0xa5, 0xa8, 0xaf, 0xfd, 0xf2,
+	0x6b, 0xf5, 0xd6, 0xef, 0xbf, 0x55, 0xe7, 0xab, 0xba, 0xf1, 0x9f, 0x02, 0x85, 0xe9, 0xf6, 0xa2,
+	0x2f, 0x01, 0xcd, 0xcc, 0x46, 0x27, 0x2e, 0x7a, 0x79, 0x38, 0x32, 0xd4, 0x69, 0x52, 0x56, 0xfc,
+	0x09, 0x94, 0x67, 0x69, 0xcb, 0xf6, 0xe9, 0x80, 0x8c, 0x5b, 0x30, 0xcd, 0x37, 0xa5, 0x82, 0xbe,
+	0x82, 0xca, 0xac, 0x07, 0x65, 0xb1, 0x4f, 0x2a, 0xaa, 0xdd, 0xb4, 0x4f, 0x2b, 0xd6, 0xc2, 0x7f,
+	0xcf, 0xac, 0x17, 0x11, 0x82, 0x0b, 0x35, 0xad, 0xaf, 0x0e, 0x47, 0xc6, 0x9d, 0x69, 0x97, 0xbd,
+	0x50, 0xd0, 0xcb, 0xf1, 0x7b, 0x67, 0xde, 0xb6, 0xab, 0xbd, 0xbd, 0xa8, 0x2a, 0x7f, 0x5d, 0x54,
+	0x95, 0x7f, 0x2e, 0xaa, 0xca, 0x1f, 0xef, 0xab, 0xca, 0xdb, 0xf7, 0x55, 0xe5, 0xa7, 0xd4, 0x60,
+	0xab, 0x9b, 0x91, 0xbf, 0xfc, 0xa7, 0xff, 0x07, 0x00, 0x00, 0xff, 0xff, 0xfa, 0x83, 0x2c, 0x14,
+	0x94, 0x08, 0x00, 0x00,
 }
+
+func (m *WorkOrder) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *WorkOrder) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.Id))
+	}
+	if len(m.PipelineId) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.PipelineId)))
+		i += copy(dAtA[i:], m.PipelineId)
+	}
+	if len(m.TranscoderId) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.TranscoderId)))
+		i += copy(dAtA[i:], m.TranscoderId)
+	}
+	if m.ProfileId != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.ProfileId))
+	}
+	if len(m.ClientAddress) > 0 {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.ClientAddress)))
+		i += copy(dAtA[i:], m.ClientAddress)
+	}
+	if len(m.StreamAddress) > 0 {
+		dAtA[i] = 0x32
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.StreamAddress)))
+		i += copy(dAtA[i:], m.StreamAddress)
+	}
+	if m.StreamId != 0 {
+		dAtA[i] = 0x38
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.StreamId))
+	}
+	if len(m.TranscodeInputUrl) > 0 {
+		dAtA[i] = 0x42
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.TranscodeInputUrl)))
+		i += copy(dAtA[i:], m.TranscodeInputUrl)
+	}
+	if len(m.IngestInputUrl) > 0 {
+		dAtA[i] = 0x4a
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.IngestInputUrl)))
+		i += copy(dAtA[i:], m.IngestInputUrl)
+	}
+	if len(m.TranscodeOutputUrl) > 0 {
+		dAtA[i] = 0x52
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.TranscodeOutputUrl)))
+		i += copy(dAtA[i:], m.TranscodeOutputUrl)
+	}
+	if m.Status != 0 {
+		dAtA[i] = 0x58
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.Status))
+	}
+	if len(m.Chunks) > 0 {
+		dAtA[i] = 0x62
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.Chunks)))
+		i += copy(dAtA[i:], m.Chunks)
+	}
+	if m.CreatedAt != 0 {
+		dAtA[i] = 0x68
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.CreatedAt))
+	}
+	if m.UpdatedAt != 0 {
+		dAtA[i] = 0x70
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.UpdatedAt))
+	}
+	if len(m.Worker) > 0 {
+		dAtA[i] = 0x7a
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.Worker)))
+		i += copy(dAtA[i:], m.Worker)
+	}
+	if m.Refunded {
+		dAtA[i] = 0xa0
+		i++
+		dAtA[i] = 0x1
+		i++
+		if m.Refunded {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.IngestStatus != 0 {
+		dAtA[i] = 0xa8
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.IngestStatus))
+	}
+	if len(m.StreamHash) > 0 {
+		dAtA[i] = 0xb2
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.StreamHash)))
+		i += copy(dAtA[i:], m.StreamHash)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *JobProfile) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *JobProfile) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.Id))
+	}
+	if len(m.PipelineId) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.PipelineId)))
+		i += copy(dAtA[i:], m.PipelineId)
+	}
+	if m.ProfileId != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.ProfileId))
+	}
+	if len(m.IngestInputUrl) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.IngestInputUrl)))
+		i += copy(dAtA[i:], m.IngestInputUrl)
+	}
+	if len(m.TranscodeOutputUrl) > 0 {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.TranscodeOutputUrl)))
+		i += copy(dAtA[i:], m.TranscodeOutputUrl)
+	}
+	if len(m.ClientAddress) > 0 {
+		dAtA[i] = 0x32
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.ClientAddress)))
+		i += copy(dAtA[i:], m.ClientAddress)
+	}
+	if m.StreamId != 0 {
+		dAtA[i] = 0x38
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.StreamId))
+	}
+	if len(m.StreamAddress) > 0 {
+		dAtA[i] = 0x42
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(len(m.StreamAddress)))
+		i += copy(dAtA[i:], m.StreamAddress)
+	}
+	if m.Status != 0 {
+		dAtA[i] = 0x48
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.Status))
+	}
+	if m.IngestStatus != 0 {
+		dAtA[i] = 0x50
+		i++
+		i = encodeVarintWorkorder(dAtA, i, uint64(m.IngestStatus))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *JobProfiles) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *JobProfiles) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.JobProfiles) > 0 {
+		for _, msg := range m.JobProfiles {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintWorkorder(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func encodeVarintWorkorder(dAtA []byte, offset int, v uint64) int {
+	for v >= 1<<7 {
+		dAtA[offset] = uint8(v&0x7f | 0x80)
+		v >>= 7
+		offset++
+	}
+	dAtA[offset] = uint8(v)
+	return offset + 1
+}
+func (m *WorkOrder) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovWorkorder(uint64(m.Id))
+	}
+	l = len(m.PipelineId)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	l = len(m.TranscoderId)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	if m.ProfileId != 0 {
+		n += 1 + sovWorkorder(uint64(m.ProfileId))
+	}
+	l = len(m.ClientAddress)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	l = len(m.StreamAddress)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	if m.StreamId != 0 {
+		n += 1 + sovWorkorder(uint64(m.StreamId))
+	}
+	l = len(m.TranscodeInputUrl)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	l = len(m.IngestInputUrl)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	l = len(m.TranscodeOutputUrl)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	if m.Status != 0 {
+		n += 1 + sovWorkorder(uint64(m.Status))
+	}
+	l = len(m.Chunks)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	if m.CreatedAt != 0 {
+		n += 1 + sovWorkorder(uint64(m.CreatedAt))
+	}
+	if m.UpdatedAt != 0 {
+		n += 1 + sovWorkorder(uint64(m.UpdatedAt))
+	}
+	l = len(m.Worker)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	if m.Refunded {
+		n += 3
+	}
+	if m.IngestStatus != 0 {
+		n += 2 + sovWorkorder(uint64(m.IngestStatus))
+	}
+	l = len(m.StreamHash)
+	if l > 0 {
+		n += 2 + l + sovWorkorder(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *JobProfile) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovWorkorder(uint64(m.Id))
+	}
+	l = len(m.PipelineId)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	if m.ProfileId != 0 {
+		n += 1 + sovWorkorder(uint64(m.ProfileId))
+	}
+	l = len(m.IngestInputUrl)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	l = len(m.TranscodeOutputUrl)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	l = len(m.ClientAddress)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	if m.StreamId != 0 {
+		n += 1 + sovWorkorder(uint64(m.StreamId))
+	}
+	l = len(m.StreamAddress)
+	if l > 0 {
+		n += 1 + l + sovWorkorder(uint64(l))
+	}
+	if m.Status != 0 {
+		n += 1 + sovWorkorder(uint64(m.Status))
+	}
+	if m.IngestStatus != 0 {
+		n += 1 + sovWorkorder(uint64(m.IngestStatus))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *JobProfiles) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.JobProfiles) > 0 {
+		for _, e := range m.JobProfiles {
+			l = e.Size()
+			n += 1 + l + sovWorkorder(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func sovWorkorder(x uint64) (n int) {
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
+}
+func sozWorkorder(x uint64) (n int) {
+	return sovWorkorder(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *WorkOrder) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowWorkorder
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: WorkOrder: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: WorkOrder: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PipelineId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PipelineId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TranscoderId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TranscoderId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProfileId", wireType)
+			}
+			m.ProfileId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ProfileId |= (v1.ProfileId(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClientAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ClientAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StreamAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StreamAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StreamId", wireType)
+			}
+			m.StreamId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StreamId |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TranscodeInputUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TranscodeInputUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IngestInputUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.IngestInputUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TranscodeOutputUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TranscodeOutputUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 11:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= (WorkOrderStatus(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 12:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Chunks", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Chunks = append(m.Chunks[:0], dAtA[iNdEx:postIndex]...)
+			if m.Chunks == nil {
+				m.Chunks = []byte{}
+			}
+			iNdEx = postIndex
+		case 13:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			m.CreatedAt = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CreatedAt |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 14:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedAt", wireType)
+			}
+			m.UpdatedAt = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.UpdatedAt |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 15:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Worker", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Worker = append(m.Worker[:0], dAtA[iNdEx:postIndex]...)
+			if m.Worker == nil {
+				m.Worker = []byte{}
+			}
+			iNdEx = postIndex
+		case 20:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Refunded", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Refunded = bool(v != 0)
+		case 21:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IngestStatus", wireType)
+			}
+			m.IngestStatus = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.IngestStatus |= (IngestStatus(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 22:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StreamHash", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StreamHash = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipWorkorder(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *JobProfile) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowWorkorder
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: JobProfile: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: JobProfile: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PipelineId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PipelineId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProfileId", wireType)
+			}
+			m.ProfileId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ProfileId |= (v1.ProfileId(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IngestInputUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.IngestInputUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TranscodeOutputUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TranscodeOutputUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClientAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ClientAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StreamId", wireType)
+			}
+			m.StreamId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StreamId |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StreamAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StreamAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= (WorkOrderStatus(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 10:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IngestStatus", wireType)
+			}
+			m.IngestStatus = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.IngestStatus |= (IngestStatus(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipWorkorder(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *JobProfiles) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowWorkorder
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: JobProfiles: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: JobProfiles: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field JobProfiles", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.JobProfiles = append(m.JobProfiles, &JobProfile{})
+			if err := m.JobProfiles[len(m.JobProfiles)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipWorkorder(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthWorkorder
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func skipWorkorder(dAtA []byte) (n int, err error) {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowWorkorder
+			}
+			if iNdEx >= l {
+				return 0, io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		wireType := int(wire & 0x7)
+		switch wireType {
+		case 0:
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				iNdEx++
+				if dAtA[iNdEx-1] < 0x80 {
+					break
+				}
+			}
+			return iNdEx, nil
+		case 1:
+			iNdEx += 8
+			return iNdEx, nil
+		case 2:
+			var length int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowWorkorder
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				length |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			iNdEx += length
+			if length < 0 {
+				return 0, ErrInvalidLengthWorkorder
+			}
+			return iNdEx, nil
+		case 3:
+			for {
+				var innerWire uint64
+				var start int = iNdEx
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowWorkorder
+					}
+					if iNdEx >= l {
+						return 0, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					innerWire |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				innerWireType := int(innerWire & 0x7)
+				if innerWireType == 4 {
+					break
+				}
+				next, err := skipWorkorder(dAtA[start:])
+				if err != nil {
+					return 0, err
+				}
+				iNdEx = start + next
+			}
+			return iNdEx, nil
+		case 4:
+			return iNdEx, nil
+		case 5:
+			iNdEx += 4
+			return iNdEx, nil
+		default:
+			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
+		}
+	}
+	panic("unreachable")
+}
+
+var (
+	ErrInvalidLengthWorkorder = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowWorkorder   = fmt.Errorf("proto: integer overflow")
+)
