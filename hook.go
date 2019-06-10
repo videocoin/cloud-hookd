@@ -96,8 +96,8 @@ func (h *Hook) handlePublish(r *http.Request) error {
 
 	managerResp, err := h.manager.UpdateStreamStatus(ctx, &manager_v1.StreamStatusRequest{
 		StreamHash:   streamInfo.StreamHash,
-		Status:       workorder_v1.WorkOrderStatusPending,
-		IngestStatus: workorder_v1.IngestStatusActive,
+		Status:       workorder_v1.WorkOrderStatusPending.String(),
+		IngestStatus: workorder_v1.IngestStatusActive.String(),
 	})
 
 	if err != nil {
