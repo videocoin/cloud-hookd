@@ -1,7 +1,7 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/VideoCoin/cloud-api v0.0.13 h1:RDlFDnpdehuS9KcwgPcRtEqvIzav29NueQtgjkuG9Js=
-github.com/VideoCoin/cloud-api v0.0.13/go.mod h1:chA30hq2zP5PS2Uac2wV6vOdMbNmZ2sibwktFJLrs7A=
+github.com/VideoCoin/cloud-api v0.0.15 h1:SOCbbWA6ge2ux75zFvwOVIkwGZLuJa7aOgRO7I6Blr4=
+github.com/VideoCoin/cloud-api v0.0.15/go.mod h1:chA30hq2zP5PS2Uac2wV6vOdMbNmZ2sibwktFJLrs7A=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973 h1:xJ4a3vCFaGF/jqvzLMYoU8P317H5OQ+Via4RmuPwCS0=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
