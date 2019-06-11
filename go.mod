@@ -3,7 +3,7 @@ module github.com/VideoCoin/hookd
 go 1.12
 
 require (
-	github.com/VideoCoin/cloud-api v0.0.15
+	github.com/VideoCoin/cloud-api v0.0.16
 	github.com/gogo/protobuf v1.2.1
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
