@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	manager_v1 "github.com/VideoCoin/cloud-api/manager/v1"
-	workorder_v1 "github.com/VideoCoin/cloud-api/workorder/v1"
+	manager_v1 "github.com/videocoin/cloud-api/manager/v1"
+	workorder_v1 "github.com/videocoin/cloud-api/workorder/v1"
 
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"

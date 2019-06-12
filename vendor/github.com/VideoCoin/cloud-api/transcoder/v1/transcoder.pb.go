@@ -5,8 +5,8 @@ package v1
 
 import (
 	fmt "fmt"
-	v11 "github.com/VideoCoin/cloud-api/profiles/v1"
-	v1 "github.com/VideoCoin/cloud-api/workorder/v1"
+	v11 "github.com/videocoin/cloud-api/profiles/v1"
+	v1 "github.com/videocoin/cloud-api/workorder/v1"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	math "math"

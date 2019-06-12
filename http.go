@@ -3,7 +3,7 @@ package hookd
 import (
 	"context"
 
-	manager_v1 "github.com/VideoCoin/cloud-api/manager/v1"
+	manager_v1 "github.com/videocoin/cloud-api/manager/v1"
 	"github.com/gogo/protobuf/types"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 

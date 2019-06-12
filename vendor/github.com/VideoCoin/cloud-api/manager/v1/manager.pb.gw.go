@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/VideoCoin/cloud-api/profiles/v1"
-	v1_1 "github.com/VideoCoin/cloud-api/transcoder/v1"
-	v1_0 "github.com/VideoCoin/cloud-api/workorder/v1"
+	"github.com/videocoin/cloud-api/profiles/v1"
+	v1_1 "github.com/videocoin/cloud-api/transcoder/v1"
+	v1_0 "github.com/videocoin/cloud-api/workorder/v1"
 	"github.com/gogo/protobuf/types"
 	"github.com/golang/protobuf/proto"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"

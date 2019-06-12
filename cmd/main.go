@@ -1,6 +1,6 @@
 package main
 
-import "github.com/VideoCoin/hookd"
+import "github.com/videocoin/hookd"
 
 func main() {
 	hookd.Start()
