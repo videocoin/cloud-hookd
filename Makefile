@@ -41,6 +41,8 @@ test-coverage:
 docker: deps
 	@echo "==> Docker building..."
 	@docker build -t $(IMAGE_TAG) -t $(LATEST) . --squash
+	@docker push $(IMAGE_TAG)
+	@docker push $(LATEST)
 
 push:
 	@docker push $(IMAGE_TAG)
