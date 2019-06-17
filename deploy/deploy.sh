@@ -61,7 +61,6 @@ function deploy() {
     helm upgrade \
         --kube-context "${KUBE_CONTEXT}" \
         --install \
-        --set service.ip="${SERVICE_IP}" \
         --set image.tag="${VERSION}" \
         --set image.repo="${DOCKER_REGISTRY}/${PROJECT}/${CHART_NAME}" \
         --set config.managerRpcAddr="${MANAGER_RPC_ADDR}" \
