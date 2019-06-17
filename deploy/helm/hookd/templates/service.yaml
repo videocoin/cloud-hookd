@@ -8,7 +8,9 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
-  loadBalancerIP: {{ .Values.service.ip }}
+{{ if eq .Values.service.type "ClusterIP" }}
+  clusterIP: {{ .Values.service.clusterIP | default "None" | quote }}
+{{ end }}
   ports:
   - name: external
     protocol: TCP
