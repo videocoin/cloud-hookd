@@ -40,7 +40,7 @@ test-coverage:
 
 docker:
 	@echo "==> Docker building..."
-	@docker build -t $(IMAGE_TAG) -t $(LATEST)
+	@docker build -t $(IMAGE_TAG) -t $(LATEST) .
 
 push:
 	@docker push $(IMAGE_TAG)
