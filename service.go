@@ -7,6 +7,7 @@ import (
 
 	"github.com/labstack/gommon/log"
 	"github.com/sirupsen/logrus"
+	"github.com/videocoin/cloud-pkg/tracer"
 )
 
 // Service struct used for hookd service object
@@ -47,6 +48,13 @@ func Start() {
 	level, err := logrus.ParseLevel(cfg.Loglevel)
 	if err != nil {
 		panic(err)
+	}
+
+	closer, err := tracer.NewTracer(Name)
+	if err != nil {
+		log.Info(err.Error())
+	} else {
+		defer closer.Close()
 	}
 
 	logrus.SetLevel(level)

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/opentracing/opentracing-go"
 	manager_v1 "github.com/videocoin/cloud-api/manager/v1"
 	workorder_v1 "github.com/videocoin/cloud-api/workorder/v1"
 
@@ -74,6 +75,18 @@ func (h *Hook) handleHook(c echo.Context) error {
 }
 
 func (h *Hook) handlePublish(r *http.Request) error {
+	span := opentracing.StartSpan("handlePublish")
+	defer span.Finish()
+
+	_, err := opentracing.GlobalTracer().Extract(
+		opentracing.HTTPHeaders,
+		opentracing.HTTPHeadersCarrier(r.Header),
+	)
+
+	if err != nil {
+		h.log.Warnf("failed to extract headers: %s", err.Error())
+	}
+
 	h.log.Info("handling publish hook")
 
 	streamInfo, err := ParseStreamName(r.FormValue("name"))
