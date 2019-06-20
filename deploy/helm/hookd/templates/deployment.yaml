@@ -30,6 +30,12 @@ spec:
           imagePullPolicy: Always
           image: "{{ .Values.image.repo }}:{{ .Values.image.tag }}"
           env:
+            - name: JAEGER_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
             - name: MANAGER_RPC_ADDR
               valueFrom:
                 configMapKeyRef:
