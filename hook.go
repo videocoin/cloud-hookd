@@ -44,7 +44,7 @@ func NewHook(
 
 func (h *Hook) handleHook(c echo.Context) error {
 	req := c.Request()
-
+	ctx := req.Context()
 	err := req.ParseForm()
 	if err != nil {
 		h.log.Errorf("failed to parse form: %s", err)
@@ -56,13 +56,13 @@ func (h *Hook) handleHook(c echo.Context) error {
 	call := req.FormValue("call")
 	switch call {
 	case "publish":
-		err = h.handlePublish(req)
+		err = h.handlePublish(ctx, req)
 	case "publish_done":
-		err = h.handlePublishDone(req)
+		err = h.handlePublishDone(ctx, req)
 	case "record":
-		err = h.handleRecord(req)
+		err = h.handleRecord(ctx, req)
 	case "record_done":
-		err = h.handleRecordDone(req)
+		err = h.handleRecordDone(ctx, req)
 	default:
 		return c.NoContent(http.StatusBadRequest)
 	}
@@ -74,18 +74,9 @@ func (h *Hook) handleHook(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-func (h *Hook) handlePublish(r *http.Request) error {
-	span := opentracing.StartSpan("handlePublish")
+func (h *Hook) handlePublish(ctx context.Context, r *http.Request) error {
+	span, _ := opentracing.StartSpanFromContext(ctx, "handlePublish")
 	defer span.Finish()
-
-	_, err := opentracing.GlobalTracer().Extract(
-		opentracing.HTTPHeaders,
-		opentracing.HTTPHeadersCarrier(r.Header),
-	)
-
-	if err != nil {
-		h.log.Warnf("failed to extract headers: %s", err.Error())
-	}
 
 	h.log.Info("handling publish hook")
 
@@ -99,15 +90,13 @@ func (h *Hook) handlePublish(r *http.Request) error {
 		"job_id": streamInfo.JobID,
 	})
 
-	h.log.Infof("using stream hash: %s", streamInfo.JobID)
+	h.log.Infof("using job id: %s", streamInfo.JobID)
 
 	h.log.Info("getting user profile")
 
-	ctx := context.Background()
-
 	h.log.Info("marking camera as on air")
 
-	managerResp, err := h.manager.UpdateStatus(ctx, &manager_v1.UpdateJobRequest{
+	managerResp, err := h.manager.UpdateStatus(context.Background(), &manager_v1.UpdateJobRequest{
 		Id:           streamInfo.JobID,
 		Status:       workorder_v1.WorkOrderStatusPending,
 		IngestStatus: workorder_v1.IngestStatusActive,
@@ -122,7 +111,10 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	return nil
 }
 
-func (h *Hook) handlePublishDone(r *http.Request) error {
+func (h *Hook) handlePublishDone(ctx context.Context, r *http.Request) error {
+	span, _ := opentracing.StartSpanFromContext(ctx, "handlePublishDone")
+	defer span.Finish()
+
 	h.log.Info("handling publish done hook")
 
 	streamInfo, err := ParseStreamName(r.FormValue("name"))
@@ -132,14 +124,12 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 	}
 
 	h.log = h.log.WithFields(logrus.Fields{
-		"stream_hash": streamInfo.JobID,
+		"job_id": streamInfo.JobID,
 	})
-
-	ctx := context.Background()
 
 	h.log.Info("marking stream as offline")
 
-	managerResp, err := h.manager.Stop(ctx, &manager_v1.JobRequest{
+	managerResp, err := h.manager.Stop(context.Background(), &manager_v1.JobRequest{
 		Id: streamInfo.JobID,
 	})
 
@@ -153,10 +143,14 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 
 }
 
-func (h *Hook) handleRecord(r *http.Request) error {
+func (h *Hook) handleRecord(ctx context.Context, r *http.Request) error {
+	span, _ := opentracing.StartSpanFromContext(ctx, "handleRecord")
+	defer span.Finish()
 	return nil
 }
 
-func (h *Hook) handleRecordDone(r *http.Request) error {
+func (h *Hook) handleRecordDone(ctx context.Context, r *http.Request) error {
+	span, _ := opentracing.StartSpanFromContext(ctx, "handleRecordDone")
+	defer span.Finish()
 	return nil
 }
