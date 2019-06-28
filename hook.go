@@ -90,6 +90,10 @@ func (h *Hook) handlePublish(ctx context.Context, r *http.Request) error {
 		"job_id": streamInfo.JobID,
 	})
 
+	span.LogKV(
+		"job_id", streamInfo.JobID,
+	)
+
 	h.log.Infof("using job id: %s", streamInfo.JobID)
 
 	h.log.Info("getting user profile")
@@ -126,6 +130,10 @@ func (h *Hook) handlePublishDone(ctx context.Context, r *http.Request) error {
 	h.log = h.log.WithFields(logrus.Fields{
 		"job_id": streamInfo.JobID,
 	})
+
+	span.LogKV(
+		"job_id", streamInfo.JobID,
+	)
 
 	h.log.Info("marking stream as offline")
 
