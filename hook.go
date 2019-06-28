@@ -96,10 +96,10 @@ func (h *Hook) handlePublish(r *http.Request) error {
 	}
 
 	h.log = h.log.WithFields(logrus.Fields{
-		"stream_hash": streamInfo.StreamHash,
+		"job_id": streamInfo.JobID,
 	})
 
-	h.log.Infof("using stream hash: %s", streamInfo.StreamHash)
+	h.log.Infof("using stream hash: %s", streamInfo.JobID)
 
 	h.log.Info("getting user profile")
 
@@ -107,8 +107,8 @@ func (h *Hook) handlePublish(r *http.Request) error {
 
 	h.log.Info("marking camera as on air")
 
-	managerResp, err := h.manager.UpdateStreamStatus(ctx, &manager_v1.StreamStatusRequest{
-		StreamHash:   streamInfo.StreamHash,
+	managerResp, err := h.manager.UpdateStatus(ctx, &manager_v1.UpdateJobRequest{
+		Id:           streamInfo.JobID,
 		Status:       workorder_v1.WorkOrderStatusPending,
 		IngestStatus: workorder_v1.IngestStatusActive,
 	})
@@ -132,15 +132,15 @@ func (h *Hook) handlePublishDone(r *http.Request) error {
 	}
 
 	h.log = h.log.WithFields(logrus.Fields{
-		"stream_hash": streamInfo.StreamHash,
+		"stream_hash": streamInfo.JobID,
 	})
 
 	ctx := context.Background()
 
 	h.log.Info("marking stream as offline")
 
-	managerResp, err := h.manager.StopStream(ctx, &manager_v1.StopStreamRequest{
-		StreamHash: streamInfo.StreamHash,
+	managerResp, err := h.manager.Stop(ctx, &manager_v1.JobRequest{
+		Id: streamInfo.JobID,
 	})
 
 	if err != nil {
