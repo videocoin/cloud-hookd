@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/opentracing/opentracing-go"
+	jobs_v1 "github.com/videocoin/cloud-api/jobs/v1"
 	manager_v1 "github.com/videocoin/cloud-api/manager/v1"
-	jobs_v1 "github.com/videocoin/cloud-api/workorder/v1"
 
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
