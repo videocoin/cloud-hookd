@@ -7,7 +7,7 @@ import (
 
 	"github.com/opentracing/opentracing-go"
 	manager_v1 "github.com/videocoin/cloud-api/manager/v1"
-	workorder_v1 "github.com/videocoin/cloud-api/workorder/v1"
+	jobs_v1 "github.com/videocoin/cloud-api/workorder/v1"
 
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
@@ -101,9 +101,9 @@ func (h *Hook) handlePublish(ctx context.Context, r *http.Request) error {
 	h.log.Info("marking camera as on air")
 
 	managerResp, err := h.manager.UpdateStatus(context.Background(), &manager_v1.UpdateJobRequest{
-		Id:           streamInfo.JobID,
-		Status:       workorder_v1.WorkOrderStatusPending,
-		IngestStatus: workorder_v1.IngestStatusActive,
+		Id:          streamInfo.JobID,
+		Status:      jobs_v1.JobStatusPending,
+		InputStatus: jobs_v1.InputStatusActive,
 	})
 
 	if err != nil {
