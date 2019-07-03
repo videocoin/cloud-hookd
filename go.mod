@@ -18,7 +18,7 @@ require (
 	github.com/prometheus/client_golang v1.0.0
 	github.com/rogpeppe/fastuuid v1.1.0 // indirect
 	github.com/sirupsen/logrus v1.4.2
-	github.com/videocoin/cloud-api v0.1.22-0.20190702174035-6825998bdc82
+	github.com/videocoin/cloud-api v0.1.22-0.20190702235012-4655e5db1580
 	github.com/videocoin/cloud-pkg v0.0.2
 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4 // indirect
 	golang.org/x/exp v0.0.0-20190627132806-fd42eb6b336f // indirect

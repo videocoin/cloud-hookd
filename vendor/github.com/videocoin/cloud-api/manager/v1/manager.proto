@@ -141,17 +141,19 @@ message TranscoderStatusRequest {
 
 message JobRequest {
   string id = 1;
-  int64 stream_id = 2;
-  cloud.api.profiles.v1.ProfileId profile_id = 3;
+  string pipeline_id = 2;
+  int64 stream_id = 3;
+  cloud.api.profiles.v1.ProfileId profile_id = 4;
 }
 
 message UpdateJobRequest {
   string id = 1;
   cloud.api.profiles.v1.ProfileId profile_id = 2;
-  string client_address = 3;
-  int64 stream_id = 4;
-  string stream_address = 5;
-  cloud.api.jobs.v1.JobStatus status = 6;
-  cloud.api.jobs.v1.InputStatus input_status = 7;
+  string pipeline_id = 3;
+  string client_address = 4;
+  int64 stream_id = 5;
+  string stream_address = 6;
+  cloud.api.jobs.v1.JobStatus status = 7;
+  cloud.api.jobs.v1.InputStatus input_status = 8;
 }
 

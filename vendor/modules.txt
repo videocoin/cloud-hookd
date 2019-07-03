@@ -102,7 +102,7 @@ github.com/uber/jaeger-lib/metrics
 github.com/valyala/bytebufferpool
 # github.com/valyala/fasttemplate v1.0.1
 github.com/valyala/fasttemplate
-# github.com/videocoin/cloud-api v0.1.22-0.20190702174035-6825998bdc82
+# github.com/videocoin/cloud-api v0.1.22-0.20190702235012-4655e5db1580
 github.com/videocoin/cloud-api/jobs/v1
 github.com/videocoin/cloud-api/manager/v1
 github.com/videocoin/cloud-api/profiles/v1
