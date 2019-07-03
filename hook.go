@@ -75,12 +75,12 @@ func (h *Hook) handleHook(c echo.Context) error {
 }
 
 func (h *Hook) handlePublish(ctx context.Context, r *http.Request) error {
-	span, _ := opentracing.StartSpanFromContext(ctx, "handlePublish")
+	span, spanCtx := opentracing.StartSpanFromContext(ctx, "handlePublish")
 	defer span.Finish()
 
 	h.log.Info("handling publish hook")
 
-	streamInfo, err := ParseStreamName(r.FormValue("name"))
+	streamInfo, err := ParseStreamName(spanCtx, r.FormValue("name"))
 	if err != nil {
 		h.log.Warnf("failed to parse stream name [ %+v ]: %s", streamInfo, err)
 		return ErrBadRequest
@@ -116,12 +116,12 @@ func (h *Hook) handlePublish(ctx context.Context, r *http.Request) error {
 }
 
 func (h *Hook) handlePublishDone(ctx context.Context, r *http.Request) error {
-	span, _ := opentracing.StartSpanFromContext(ctx, "handlePublishDone")
+	span, spanCtx := opentracing.StartSpanFromContext(ctx, "handlePublishDone")
 	defer span.Finish()
 
 	h.log.Info("handling publish done hook")
 
-	streamInfo, err := ParseStreamName(r.FormValue("name"))
+	streamInfo, err := ParseStreamName(spanCtx, r.FormValue("name"))
 	if err != nil {
 		h.log.Warningf("failed to parse stream name: %s", err)
 		return ErrBadRequest

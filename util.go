@@ -1,7 +1,10 @@
 package hookd
 
 import (
+	"context"
 	"fmt"
+
+	"github.com/opentracing/opentracing-go"
 )
 
 // Common ingest errors
@@ -18,7 +21,9 @@ type StreamInfo struct {
 }
 
 // ParseStreamName parses stream info from rtmp url
-func ParseStreamName(id string) (*StreamInfo, error) {
+func ParseStreamName(ctx context.Context, id string) (*StreamInfo, error) {
+	span, _ := opentracing.StartSpanFromContext(ctx, "ParseStreamName")
+	defer span.Finish()
 	if id == "" {
 		return nil, ErrEmptyStream
 	}
