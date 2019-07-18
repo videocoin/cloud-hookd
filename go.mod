@@ -21,7 +21,7 @@ require (
 	github.com/prometheus/client_golang v1.0.0
 	github.com/rogpeppe/fastuuid v1.1.0 // indirect
 	github.com/sirupsen/logrus v1.4.2
-	github.com/videocoin/cloud-api v0.1.162
+	github.com/videocoin/cloud-api v0.2.3
 	github.com/videocoin/cloud-pkg v0.0.2
 	go.opencensus.io v0.22.0 // indirect
 	golang.org/x/crypto v0.0.0-20190618222545-ea8f1a30c443 // indirect
