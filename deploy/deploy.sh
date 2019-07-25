@@ -64,6 +64,7 @@ function deploy() {
         --set image.tag="${VERSION}" \
         --set image.repo="${DOCKER_REGISTRY}/${PROJECT}/${CHART_NAME}" \
         --set config.managerRpcAddr="${MANAGER_RPC_ADDR}" \
+        --set config.serviceIp="${SERVICE_IP}" \
         --wait ${CHART_NAME} ${CHART_DIR}
 }
 
