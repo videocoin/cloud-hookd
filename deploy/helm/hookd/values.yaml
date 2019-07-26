@@ -9,9 +9,8 @@ config:
   maxReplicas: "5"
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   externalPort: 8888
-  ip: ""
 
 resources: {}
 
