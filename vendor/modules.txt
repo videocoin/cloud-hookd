@@ -102,13 +102,13 @@ github.com/uber/jaeger-lib/metrics
 github.com/valyala/bytebufferpool
 # github.com/valyala/fasttemplate v1.0.1
 github.com/valyala/fasttemplate
-# github.com/videocoin/cloud-api v0.1.160
+# github.com/videocoin/cloud-api v0.1.161-0.20190726203359-4500798149ed
 github.com/videocoin/cloud-api/jobs/v1
 github.com/videocoin/cloud-api/manager/v1
 github.com/videocoin/cloud-api/profiles/v1
 github.com/videocoin/cloud-api/rpc
 github.com/videocoin/cloud-api/transcoder/v1
-# github.com/videocoin/cloud-pkg v0.0.3-0.20190702184752-6d6f7da54f91
+# github.com/videocoin/cloud-pkg v0.0.3-0.20190712213107-e13988c093de
 github.com/videocoin/cloud-pkg/tracer
 # golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
 golang.org/x/crypto/acme/autocert
