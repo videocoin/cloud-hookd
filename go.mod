@@ -22,7 +22,7 @@ require (
 	github.com/rogpeppe/fastuuid v1.1.0 // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/videocoin/cloud-api v0.2.6
-	github.com/videocoin/cloud-pkg v0.0.2
+	github.com/videocoin/cloud-pkg v0.0.3-0.20190712213107-e13988c093de
 	go.opencensus.io v0.22.0 // indirect
 	golang.org/x/crypto v0.0.0-20190618222545-ea8f1a30c443 // indirect
 	golang.org/x/exp v0.0.0-20190510132918-efd6b22b2522 // indirect
