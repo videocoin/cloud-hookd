@@ -1,13 +1,37 @@
 # Hookd
 
-Handles all incoming ingester hooks
+## Requirements
 
-## Publishing new build
+* go v1.10+
+* helm
+* docker
+* kubectl
+
+## Config
+
+To update config variables connect to consul
 
 ```
-    make
+kubectl port-forward config-consul-0 8500:850
 ```
 
-Required environment variables
+go to http://localhost:8500/ui and edit the key/values you need
 
-- PROJECT_ID
+
+## Release
+
+First you must have access to the consul in the environment you wish to deploy to.
+
+### access consul
+
+```
+
+kubectl port-forward config-consul-0 8500:8500
+
+```
+
+### deploy
+
+To release a new image simply run `make` which will build and push a new docker image then release the assosiated helm chart.
+
+If you have new dependencies run `make deps` before releasing.
