@@ -1,17 +1,14 @@
 .NOTPARALLEL:
 .EXPORT_ALL_VARIABLES:
-.DEFAULT_GOAL := docker
-
+.DEFAULT_GOAL := push
 DOCKER_REGISTRY = us.gcr.io
-CIRCLE_ARTIFACTS = ./bin
+PROJECT_ID= videocoin-network
 SERVICE_NAME = hookd
 
-PROJECT_ID= videocoin-network
 VERSION=$$(git describe --abbrev=0)-$$(git rev-parse --short HEAD)
 IMAGE_TAG=$(DOCKER_REGISTRY)/$(PROJECT_ID)/$(SERVICE_NAME):$(VERSION)
-LATEST=$(DOCKER_REGISTRY)/$(PROJECT_ID)/$(SERVICE_NAME):latest
+LATEST=$(DOCKER_REGISTRY)/${PROJECT_ID}/$(SERVICE_NAME):latest
 
-main: build docker push
 
 version:
 	@echo $(VERSION)
@@ -21,18 +18,19 @@ image-tag:
 
 deps:
 	env GO111MODULE=on go mod vendor
+	cp -r $(GOPATH)/src/github.com/ethereum/go-ethereum/crypto/secp256k1/libsecp256k1 \
+	vendor/github.com/ethereum/go-ethereum/crypto/secp256k1/
 
 build:
 	export GOOS=linux
 	export GOARCH=amd64
 	export CGO_ENABLED=0
 	@echo "==> Building..."
-	@go build -a -installsuffix cgo -ldflags="-w -s" -o bin/$(SERVICE_NAME) cmd/main.go
-
+	go build -a -installsuffix cgo -ldflags="-w -s" -o bin/$(SERVICE_NAME) cmd/main.go
 
 test:
 	@echo "==> Running tests..."
-	@go test -v ./...
+	go test -v ./...
 
 test-coverage:
 	@echo "==> Running tests..."
@@ -40,14 +38,18 @@ test-coverage:
 
 docker:
 	@echo "==> Docker building..."
-	@docker build -t $(IMAGE_TAG) -t $(LATEST) .
+	docker build -t ${IMAGE_TAG} -t $(LATEST) .
 
-push:
-	@docker push $(IMAGE_TAG)
-	@docker push $(LATEST)
+docker-push:
+	docker push $(IMAGE_TAG)
+	docker push $(LATEST)
 
 clean:
-	rm -rf release/*
+	rm -rf bin/*
 
+deploy:
+	@cd deploy && ./deploy.sh
 
-publish: package store clean
+push: docker docker-push
+
+.PHONY : build deps test push clean docker deploy release
