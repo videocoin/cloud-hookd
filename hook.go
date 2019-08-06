@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/opentracing/opentracing-go"
 	jobs_v1 "github.com/videocoin/cloud-api/jobs/v1"
@@ -15,8 +16,9 @@ import (
 
 // Common hook errors
 var (
-	ErrUnknownHook = fmt.Errorf("unknown hook")
-	ErrBadRequest  = echo.NewHTTPError(http.StatusBadRequest)
+	ErrUnknownHook  = fmt.Errorf("unknown hook")
+	ErrBadJobStatus = fmt.Errorf("invalid job status")
+	ErrBadRequest   = echo.NewHTTPError(http.StatusBadRequest)
 )
 
 // Hook struct used for managing hooks
@@ -94,7 +96,10 @@ func (h *Hook) handlePublish(ctx context.Context, r *http.Request) error {
 
 	h.log.Infof("using job id: %s", streamInfo.JobID)
 
-	h.log.Info("getting user profile")
+	if !h.prepared(streamInfo.JobID) {
+		h.log.Error("invalid job status")
+		return ErrBadJobStatus
+	}
 
 	h.log.Info("marking camera as on air")
 
@@ -157,4 +162,25 @@ func (h *Hook) handleRecordDone(ctx context.Context, r *http.Request) error {
 	span, _ := opentracing.StartSpanFromContext(ctx, "handleRecordDone")
 	defer span.Finish()
 	return nil
+}
+
+func (h *Hook) prepared(jobID string) bool {
+	ticker := time.Tick(5 * time.Second)
+	timeout := time.After(2 * time.Minute)
+	for {
+		select {
+		case <-ticker:
+			job, err := h.manager.Get(context.Background(), &manager_v1.JobRequest{
+				Id: jobID,
+			})
+			if err != nil {
+				h.log.Warnf("failed to get job: %s", err.Error())
+			}
+			if job.Status == jobs_v1.JobStatusPrepared {
+				return true
+			}
+		case <-timeout:
+			return false
+		}
+	}
 }
