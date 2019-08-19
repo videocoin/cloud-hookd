@@ -13,6 +13,6 @@ require (
 	github.com/prometheus/client_golang v0.9.4
 	github.com/sirupsen/logrus v1.4.2
 	github.com/videocoin/cloud-api v0.1.178
-	github.com/videocoin/cloud-pkg v0.0.2
+	github.com/videocoin/cloud-pkg v0.0.5
 	google.golang.org/grpc v1.21.1
 )
