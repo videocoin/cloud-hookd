@@ -2,7 +2,7 @@
 .EXPORT_ALL_VARIABLES:
 .DEFAULT_GOAL := push
 DOCKER_REGISTRY = us.gcr.io
-PROJECT_ID= videocoin-network
+PROJECT_ID= videocoin-fuji
 SERVICE_NAME = hookd
 BRANCH=$$(git branch | grep \* | cut -d ' ' -f2)
 

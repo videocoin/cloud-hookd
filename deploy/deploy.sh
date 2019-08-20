@@ -4,10 +4,10 @@ readonly CHART_NAME=hookd
 readonly CHART_DIR=./helm/hookd
 
 CONSUL_ADDR=${CONSUL_ADDR:=127.0.0.1:8500}
-ENV=${ENV:=prod}
+ENV=${ENV:=fuji}
 DOCKER_REGISTRY=us.gcr.io
 VERSION=$(git describe --abbrev=0)-$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
-PROJECT=videocoin-network
+PROJECT=videocoin-fuji
 
 function log {
   local readonly level="$1"
