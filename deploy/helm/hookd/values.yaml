@@ -3,7 +3,6 @@ image:
   tag: ""
   pullPolicy: Always
 
-
 config:
   minReplicas: "1"
   maxReplicas: "5"
@@ -11,7 +10,7 @@ config:
 service:
   type: LoadBalancer
   externalPort: 8888
-  ip: "35.202.175.97"
+  ip: "104.154.109.123"
 
 resources: {}
 
