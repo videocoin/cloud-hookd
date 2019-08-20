@@ -4,7 +4,7 @@ readonly CHART_NAME=hookd
 readonly CHART_DIR=./helm/hookd
 
 CONSUL_ADDR=${CONSUL_ADDR:=127.0.0.1:8500}
-ENV=${ENV:=dev}
+ENV=${ENV:=prod}
 DOCKER_REGISTRY=us.gcr.io
 VERSION=$(git describe --abbrev=0)-$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)
 PROJECT=videocoin-network
