@@ -10,7 +10,7 @@ config:
 service:
   type: LoadBalancer
   externalPort: 8888
-  ip: "34.68.16.102"
+  ip: "34.68.1.68"
 
 resources: {}
 
