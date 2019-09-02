@@ -1,20 +1,20 @@
-FROM golang:latest AS builder
+FROM golang:1.10 as builder
 
-LABEL maintainer="Videocoin" description="nginx hooks"
+RUN apt-get update
+RUN apt-get install -y ca-certificates
 
-RUN apt update && apt upgrade -y
-RUN apt install ca-certificates -y
+COPY . /go/src/github.com/videocoin/cloud-hookd
 
-WORKDIR /go/src/github.com/videocoin/hookd
+WORKDIR /go/src/github.com/videocoin/cloud-hookd
 
-ADD ./ ./
+RUN make test
+RUN make build-bin
 
-RUN make build
+FROM bitnami/minideb:jessie
 
-FROM ubuntu:latest AS release
+RUN apt-get update
+RUN apt-get install -y ca-certificates
 
+COPY --from=builder /go/src/github.com/videocoin/cloud-hookd/bin/hookd /hookd
 
-COPY --from=builder /go/src/github.com/videocoin/hookd/bin/hookd ./
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-
-ENTRYPOINT [ "./hookd" ]
+CMD ["/hookd"]

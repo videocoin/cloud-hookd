@@ -1,45 +1,27 @@
 package hookd
 
 import (
-	"context"
-
-	manager_v1 "github.com/videocoin/cloud-api/manager/v1"
-	"github.com/gogo/protobuf/types"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-
 	"github.com/labstack/echo"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
+	managerv1 "github.com/videocoin/cloud-api/manager/v1"
+	"github.com/videocoin/hookd/pkg/grpcclient"
 	"google.golang.org/grpc"
 )
 
-// HTTPServerConfig addresses for http server
 type HTTPServerConfig struct {
-	Addr               string
-	UserProfileRPCADDR string
-	CamerasRPCADDR     string
-	ManagerRPCADDR     string
+	Addr           string
+	ManagerRPCAddr string
 }
 
-// HTTPServer http server reciver
-// holds echo, config, and log objects
-type HTTPServer struct {
-	cfg  *HTTPServerConfig
-	e    *echo.Echo
-	log  *logrus.Entry
-	hook *Hook
+type httpServer struct {
+	cfg    *HTTPServerConfig
+	e      *echo.Echo
+	logger *logrus.Entry
+	hook   *Hook
 }
 
-// NewHTTPServer returns reference to new HTTPServer object
-func NewHTTPServer(cfg *HTTPServerConfig, log *logrus.Entry) (*HTTPServer, error) {
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-
-	managerConn, err := grpc.Dial(cfg.ManagerRPCADDR, opts...)
-	if err != nil {
-		return nil, err
-	}
-
-	manager := manager_v1.NewManagerServiceClient(managerConn)
-
+func NewHTTPServer(cfg *HTTPServerConfig, logger *logrus.Entry) (*httpServer, error) {
 	e := echo.New()
 	e.HideBanner = true
 	e.HidePort = true
@@ -49,37 +31,39 @@ func NewHTTPServer(cfg *HTTPServerConfig, log *logrus.Entry) (*HTTPServer, error
 		return c.JSON(200, map[string]string{"status": "OK"})
 	})
 
-	status, err := manager.Health(context.Background(), &types.Empty{})
-	if status.GetStatus() != "healthy" || err != nil {
-		panic(err)
+	hookConfig := &HookConfig{Prefix: "/hook"}
+
+	managerOpts := grpcclient.DialOpts(logger)
+	managerConn, err := grpc.Dial(cfg.ManagerRPCAddr, managerOpts...)
+	if err != nil {
+		return nil, err
 	}
+	manager := managerv1.NewManagerServiceClient(managerConn)
 
 	hook, err := NewHook(
 		e,
-		"/hook",
+		hookConfig,
 		manager,
-		log.WithField("system", "hook"),
+		logger.WithField("system", "hook"),
 	)
 	if err != nil {
 		return nil, err
 	}
 
-	return &HTTPServer{
-		cfg:  cfg,
-		e:    e,
-		log:  log,
-		hook: hook,
+	return &httpServer{
+		cfg:    cfg,
+		e:      e,
+		logger: logger,
+		hook:   hook,
 	}, nil
 }
 
-// Start starts echo server
-func (s *HTTPServer) Start() error {
-	s.log.Infof("http server listening on %s", s.cfg.Addr)
+func (s *httpServer) Start() error {
+	s.logger.Infof("http server listening on %s", s.cfg.Addr)
 	return s.e.Start(s.cfg.Addr)
 }
 
-// Stop does nothing
-func (s *HTTPServer) Stop() error {
-	s.log.Infof("stopping http server")
+func (s *httpServer) Stop() error {
+	s.logger.Infof("stopping http server")
 	return nil
 }

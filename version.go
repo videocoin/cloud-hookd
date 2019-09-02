@@ -1,7 +1,6 @@
 package hookd
 
-// Version info for ingest
 var (
-	Name    = "streamingester-hooks"
-	Version = "dev"
+	Name    string = "streamingester-hookd"
+	Version string = "dev"
 )

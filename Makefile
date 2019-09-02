@@ -1,51 +1,37 @@
 .NOTPARALLEL:
-.EXPORT_ALL_VARIABLES:
-.DEFAULT_GOAL := push
-DOCKER_REGISTRY = us.gcr.io
-PROJECT_ID= videocoin-network
-SERVICE_NAME = hookd
-BRANCH=$$(git branch | grep \* | cut -d ' ' -f2)
 
-VERSION=$$(git describe --abbrev=0)-$$(git rev-parse --abbrev-ref HEAD)-$$(git rev-parse --short HEAD)
-IMAGE_TAG=$(DOCKER_REGISTRY)/$(PROJECT_ID)/$(SERVICE_NAME):$(VERSION)
+GOOS?=linux
+GOARCH?=amd64
+
+DOCKER_REGISTRY?=us.gcr.io/videocoin-network
+APP_NAME?=hookd
+VERSION?=$$(git describe --abbrev=0)-$$(git rev-parse --short HEAD)
+IMAGE_TAG=${DOCKER_REGISTRY}/${APP_NAME}:${VERSION}
+
+.PHONY: deploy
+
+default: release
 
 version:
-	@echo $(VERSION)
+	@echo ${VERSION}
 
 image-tag:
-	@echo $(IMAGE_TAG)
-
-deps:
-	env GO111MODULE=on go mod vendor
+	@echo ${IMAGE_TAG}
 
 build:
-	export GOOS=linux
-	export GOARCH=amd64
-	export CGO_ENABLED=0
+	docker build -t ${IMAGE_TAG} -f Dockerfile .
+
+build-bin:
 	@echo "==> Building..."
-	go build -a -installsuffix cgo -ldflags="-w -s" -o bin/$(SERVICE_NAME) cmd/main.go
+	GOOS=${GOOS} GOARCH=${GOARCH} \
+	go build -ldflags="-w -s -X main.Version=${VERSION}" -o bin/${APP_NAME} cmd/${APP_NAME}/main.go
 
 test:
-	@echo "==> Running tests..."
-	go test -v ./...
+	@echo "No tests..."
 
-test-coverage:
-	@echo "==> Running tests..."
-	go test -cover ./...
+push:
+	@echo "==> Pushing ${APP_NAME} docker image..."
+	docker push ${IMAGE_TAG}
 
-docker:
-	@echo "==> Docker building..."
-	docker build -t ${IMAGE_TAG} .
+release: build test push
 
-docker-push:
-	docker push $(IMAGE_TAG)
-
-clean:
-	rm -rf bin/*
-
-deploy:
-	@cd deploy && ./deploy.sh
-
-push: docker docker-push
-
-.PHONY : build deps test push clean docker deploy release
