@@ -61,10 +61,6 @@ func (h *Hook) handleHook(c echo.Context) error {
 		err = h.handlePublish(ctx, req)
 	case "publish_done":
 		err = h.handlePublishDone(ctx, req)
-	case "record":
-		err = h.handleRecord(ctx, req)
-	case "record_done":
-		err = h.handleRecordDone(ctx, req)
 	default:
 		return c.NoContent(http.StatusBadRequest)
 	}
@@ -150,18 +146,6 @@ func (h *Hook) handlePublishDone(ctx context.Context, r *http.Request) error {
 
 	return nil
 
-}
-
-func (h *Hook) handleRecord(ctx context.Context, r *http.Request) error {
-	span, _ := opentracing.StartSpanFromContext(ctx, "handleRecord")
-	defer span.Finish()
-	return nil
-}
-
-func (h *Hook) handleRecordDone(ctx context.Context, r *http.Request) error {
-	span, _ := opentracing.StartSpanFromContext(ctx, "handleRecordDone")
-	defer span.Finish()
-	return nil
 }
 
 func (h *Hook) prepared(jobID string) bool {
