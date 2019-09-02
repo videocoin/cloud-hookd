@@ -9,9 +9,9 @@ import (
 
 // Config all required config for hookd project
 type Config struct {
-	Addr           string `required:"true" envconfig:"ADDR" default:"ingester:8888"`
+	Addr           string `required:"true" envconfig:"ADDR" default:"0.0.0.0:8887"`
 	Loglevel       string `required:"true" default:"DEBUG" envconfig:"LOG_LEVEL"`
-	ManagerRPCADDR string `required:"true" envconfig:"MANAGER_RPC_ADDR" default:"manager:50051"`
+	ManagerRPCADDR string `required:"true" envconfig:"MANAGER_RPC_ADDR" default:"127.0.0.1:50051"`
 	SentryDSN      string `required:"false"`
 }
 
