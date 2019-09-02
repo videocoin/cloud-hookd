@@ -26,6 +26,12 @@ service ManagerService {
     };
   };
 
+  rpc Delete(JobRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/jobs/{id}"
+    };
+  };
+
   rpc Run(JobRequest) returns (cloud.api.jobs.v1.JobProfile) {
     option (google.api.http) = {
       post: "/api/v1/jobs/{id}/run"
