@@ -26,6 +26,9 @@ build-bin:
 	GOOS=${GOOS} GOARCH=${GOARCH} \
 	go build -ldflags="-w -s -X main.Version=${VERSION}" -o bin/${APP_NAME} cmd/${APP_NAME}/main.go
 
+deps:
+	env GO111MODULE=on go mod vendor
+
 test:
 	@echo "No tests..."
 
